@@ -1,10 +1,12 @@
 <h1 align="center">
-    <img src="img/logo.png" width="300" alt="Logo">
+    <img src="imagens/logo.png" width="300" alt="Logo">
 </h1>
 
 ### 🕵️‍♂️ Sobre
-
-        O Sistema CID se trata de um projeto avaliativo para a matéria de Banco de Dados 1 da Universidade do Oeste de Santa Catarina (UNOESC). O Objetivo desse trabalho é a idealização e desenvolvimento de um sistema moderno para Gestão das Atividades em Delegacias de Polícia, proporcionando uma otimização no fluxo de trabalho, na investigação policial e no atendimento à comunidade. 
+<p align="justify">
+O Sistema CID se trata de um projeto avaliativo para a matéria de Banco de Dados 1 da Universidade do Oeste de Santa Catarina (UNOESC). O Objetivo desse trabalho é a idealização e desenvolvimento de um sistema moderno para Gestão das Atividades em Delegacias de Polícia, proporcionando uma otimização no fluxo de trabalho, na investigação policial e no atendimento à comunidade.
+</p>
+ 
 #
 
 ### 🔎✅ Requisitos Funcionais
@@ -36,7 +38,7 @@
 - 📁Banco de Dados
     - 📁 Modelo Relacional (Modelo Relacional)
     - 📁 Tabelas
-
+- 📁Imagens
 - 📃 README (Este arquivo que você está observando neste momento)
 #
 
@@ -54,7 +56,7 @@ Desenvolvedores do Projeto:
   <tr>
     <td align="center">
       <a href="#">
-        <img src="img/emanuel.jpg" width="100px;" alt="Emanuel"/><br>
+        <img src="imagens/emanuel.jpg" width="100px;" alt="Emanuel"/><br>
         <sub>
           <b>Emanuel Previatti</b>
         </sub>
@@ -62,7 +64,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="img/luan.jpeg" width="100px;" alt="Luan"/><br>
+        <img src="imagens/luan.jpeg" width="100px;" alt="Luan"/><br>
         <sub>
           <b>Luan Tenroller</b>
         </sub>
@@ -70,7 +72,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="img/luiz.jpeg" width="100px;" alt="Luiz"/><br>
+        <img src="imagens/luiz.jpeg" width="100px;" alt="Luiz"/><br>
         <sub>
           <b>Luiz Przygoda</b>
         </sub>
@@ -78,7 +80,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="img/maria.jpeg" width="55px;" alt="Maria"/><br>
+        <img src="imagens/maria.jpeg" width="55px;" alt="Maria"/><br>
         <sub>
           <b>Maria Schneider</b>
         </sub>
@@ -86,7 +88,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="img/nathaly.jpeg" width="70px;" alt="Nathaly"/><br>
+        <img src="imagens/nathaly.jpeg" width="70px;" alt="Nathaly"/><br>
         <sub>
           <b>Nathaly Nascimento</b>
         </sub>
@@ -94,7 +96,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="img/vini.jpeg" width="70px;" alt="Vinicius"/><br>
+        <img src="imagens/vini.jpeg" width="70px;" alt="Vinicius"/><br>
         <sub>
           <b>Vinicius Wille</b>
         </sub>
