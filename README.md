@@ -4,7 +4,7 @@
 
 ### 🕵️‍♂️ Sobre
 <p align="justify">
-O Sistema CID se trata de um projeto avaliativo para a matéria de Banco de Dados 1 da Universidade do Oeste de Santa Catarina (UNOESC). O Objetivo desse trabalho é a idealização e desenvolvimento de um sistema moderno para Gestão das Atividades em Delegacias de Polícia, proporcionando uma otimização no fluxo de trabalho, na investigação policial e no atendimento à comunidade.
+O Sistema CID - Criminal Incident Database se trata de um projeto avaliativo para a matéria de Banco de Dados 1 da Universidade do Oeste de Santa Catarina (UNOESC). O Objetivo desse trabalho é a idealização e desenvolvimento de um sistema moderno para Gestão das Atividades em Delegacias de Polícia, proporcionando uma otimização no fluxo de trabalho, na investigação policial e no atendimento à comunidade.
 </p>
 
 #
@@ -80,7 +80,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="Imagens/maria.jpeg" width="100px;" alt="Maria"/><br>
+        <img src="Imagens/maria.jpeg" width="90px;" alt="Maria"/><br>
         <sub>
           <b>Maria Schneider</b>
         </sub>
@@ -96,7 +96,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="Imagens/vini.jpeg" width="100px;" alt="Vinicius"/><br>
+        <img src="Imagens/vini.jpeg" width="90px;" alt="Vinicius"/><br>
         <sub>
           <b>Vinicius Wille</b>
         </sub>
