@@ -80,7 +80,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="Imagens/maria.jpeg" width="55px;" alt="Maria"/><br>
+        <img src="Imagens/maria.jpeg" width="100px;" alt="Maria"/><br>
         <sub>
           <b>Maria Schneider</b>
         </sub>
@@ -88,7 +88,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="Imagens/nathaly.jpeg" width="70px;" alt="Nathaly"/><br>
+        <img src="Imagens/nathaly.jpeg" width="100px;" alt="Nathaly"/><br>
         <sub>
           <b>Nathaly Nascimento</b>
         </sub>
@@ -96,7 +96,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="Imagens/vini.jpeg" width="70px;" alt="Vinicius"/><br>
+        <img src="Imagens/vini.jpeg" width="100px;" alt="Vinicius"/><br>
         <sub>
           <b>Vinicius Wille</b>
         </sub>
