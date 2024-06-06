@@ -82,7 +82,7 @@ Desenvolvedores do Projeto:
       <a href="#">
         <img src="Imagens/maria.jpeg" width="90px;" alt="Maria"/><br>
         <sub>
-          <b>Maria Schneider</b>
+          <b>Maria Cecília</b>
         </sub>
       </a>
     </td>
