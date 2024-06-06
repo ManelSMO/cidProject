@@ -37,7 +37,7 @@ O Sistema CID - Criminal Incident Database se trata de um projeto avaliativo par
 
 ### 📦 Estrutura de Pastas
 - 📁Banco de Dados
-    - 📁 Modelo Relacional (Modelo Relacional)
+    - 📁 Modelo Relacional
     - 📁 Tabelas
 - 📁Imagens
 - 📃 README (Este arquivo que você está observando neste momento)
