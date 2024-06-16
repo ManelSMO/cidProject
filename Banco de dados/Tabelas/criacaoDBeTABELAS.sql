@@ -1,13 +1,5 @@
 create database CID;
 
--- Criação da tabela departamento_policia
-CREATE TABLE departamento_policia (
-    cod_dp INT PRIMARY KEY,
-    distrito_dp INT NOT NULL
-);
-COMMENT ON TABLE departamento_policia IS 'Tabela dos departamentos de polícia';
-COMMENT ON COLUMN departamento_policia.cod_dp IS 'Código do departamento de polícia';
-COMMENT ON COLUMN departamento_policia.distrito_dp IS 'Distrito do departamento de polícia';
 
 -- Criação da tabela estado
 CREATE TABLE estado (
@@ -34,6 +26,31 @@ COMMENT ON COLUMN cidade.uf_cidade IS 'UF da cidade';
 COMMENT ON COLUMN cidade.cod_ibge_cidade IS 'Código do IBGE da cidade';
 COMMENT ON COLUMN cidade.nom_cidade IS 'Nome da cidade';
 
+-- Criação da tabela bairro
+CREATE TABLE bairro (
+    cod_bairro INT PRIMARY KEY,
+    nom_bairro VARCHAR(50) NOT NULL,
+    cod_cidade INT REFERENCES cidade(cod_cidade)
+);
+COMMENT ON TABLE bairro IS 'Tabela de bairros';
+COMMENT ON COLUMN bairro.cod_bairro IS 'Código do bairro';
+COMMENT ON COLUMN bairro.nom_bairro IS 'Nome do bairro';
+COMMENT ON COLUMN bairro.cod_cidade IS 'Código da cidade do bairro';
+
+-- Criação da tabela departamento_policia
+CREATE TABLE departamento_policia (
+    cod_dp INT PRIMARY KEY,
+    distrito_dp INT NOT null,
+    numero_enderecodp INT NOT NULL,
+    codbairrodp INT REFERENCES bairro(cod_bairro)
+    
+);
+
+COMMENT ON TABLE departamento_policia IS 'Tabela dos departamentos de polícia';
+COMMENT ON COLUMN departamento_policia.cod_dp IS 'Código do departamento de polícia';
+COMMENT ON COLUMN departamento_policia.distrito_dp IS 'Distrito do departamento de polícia';
+
+
 -- Criação da tabela tipo_ocorrencia
 CREATE TABLE tipo_ocorrencia (
     cod_tipo_ocorrencia INT PRIMARY KEY,
@@ -47,11 +64,15 @@ COMMENT ON COLUMN tipo_ocorrencia.desc_ocorrencia IS 'Descrição do acontecimen
 CREATE TABLE pessoa (
     cod_pessoa INT PRIMARY KEY,
     nom_pessoa VARCHAR(40) NOT NULL,
+    idadepessoa int not null,
+    generopessoa char not null,
     est_civil_pessoa VARCHAR(40) NOT NULL,
     data_nasc_pessoa DATE NOT NULL,
     cpf_pessoa NUMERIC(11,0) UNIQUE,
     num_tele_pessoa NUMERIC(14,0) NOT NULL,
-    email_pessoa VARCHAR(40) NOT NULL
+    email_pessoa VARCHAR(40) NOT null,
+    numero_enderecop INT NOT NULL,
+    codbairrop INT REFERENCES bairro(cod_bairro)
 );
 COMMENT ON TABLE pessoa IS 'Tabela de pessoas para registrar o BO';
 COMMENT ON COLUMN pessoa.cod_pessoa IS 'Código da pessoa';
@@ -61,6 +82,8 @@ COMMENT ON COLUMN pessoa.est_civil_pessoa IS 'Estado civil da pessoa';
 COMMENT ON COLUMN pessoa.data_nasc_pessoa IS 'Data de nascimento da pessoa';
 COMMENT ON COLUMN pessoa.num_tele_pessoa IS 'Número de telefone da pessoa';
 COMMENT ON COLUMN pessoa.email_pessoa IS 'Email da pessoa';
+comment on column pessoa.numero_enderecop is 'Numero da casa da pessoa';
+comment on column pessoa.codbairrop is 'codigo do bairro da pessoa';
 
 -- Criação da tabela funcionario
 CREATE TABLE funcionario (
@@ -81,6 +104,7 @@ CREATE TABLE bo (
     data_bo DATE NOT NULL,
     local_bo VARCHAR(50) NOT NULL,
     sit_bo BOOLEAN NOT NULL,
+    cod_cidadebo INT REFERENCES cidade(cod_cidade),
     cod_fun INT REFERENCES funcionario(cod_fun)
 );
 COMMENT ON TABLE bo IS 'Tabela de boletins de ocorrência';
@@ -95,6 +119,7 @@ CREATE TABLE ocorrencia (
     data_ocorrencia DATE NOT NULL,
     local_ocorrencia VARCHAR(255) NOT NULL,
     num_envolvidos INT NOT NULL,
+    cod_cidadeo INT REFERENCES cidade(cod_cidade),
     cod_tipo_ocorrencia INT REFERENCES tipo_ocorrencia(cod_tipo_ocorrencia),
     cod_bo INT REFERENCES bo(cod_bo)
 );
@@ -103,37 +128,3 @@ COMMENT ON COLUMN ocorrencia.cod_ocorrencia IS 'Código da ocorrência';
 COMMENT ON COLUMN ocorrencia.data_ocorrencia IS 'Data que aconteceu o fato';
 COMMENT ON COLUMN ocorrencia.local_ocorrencia IS 'Local do fato';
 COMMENT ON COLUMN ocorrencia.num_envolvidos IS 'Quantidade de envolvidos no fato';
-
--- Criação da tabela endereco_pessoa
-CREATE TABLE endereco_pessoa (
-    cep_endereco SERIAL PRIMARY KEY,
-    rua_endereco VARCHAR(50) NOT NULL,
-    bairro_endereco VARCHAR(50) NOT NULL,
-    comp_endereco VARCHAR(50),
-    num_endereco INT NOT NULL,
-    cod_pessoa INT REFERENCES pessoa(cod_pessoa),
-    cod_cidade INT REFERENCES cidade(cod_cidade)
-);
-COMMENT ON TABLE endereco_pessoa IS 'Tabela de endereços das pessoas';
-COMMENT ON COLUMN endereco_pessoa.cep_endereco IS 'CEP do endereço';
-COMMENT ON COLUMN endereco_pessoa.rua_endereco IS 'Rua do endereço';
-COMMENT ON COLUMN endereco_pessoa.bairro_endereco IS 'Bairro do endereço';
-COMMENT ON COLUMN endereco_pessoa.comp_endereco IS 'Complemento do endereço';
-COMMENT ON COLUMN endereco_pessoa.num_endereco IS 'Número do endereço';
-
--- Criação da tabela endereco_dp
-CREATE TABLE endereco_dp (
-    cep_endereco SERIAL PRIMARY KEY,
-    rua_endereco VARCHAR(50) NOT NULL,
-    bairro_endereco VARCHAR(50) NOT NULL,
-    comp_endereco VARCHAR(50),
-    num_endereco INT NOT NULL,
-    cod_dp INT REFERENCES departamento_policia(cod_dp),
-    cod_cidade INT REFERENCES cidade(cod_cidade)
-);
-COMMENT ON TABLE endereco_dp IS 'Tabela de endereços dos departamentos de polícia';
-COMMENT ON COLUMN endereco_dp.cep_endereco IS 'CEP do endereço';
-COMMENT ON COLUMN endereco_dp.rua_endereco IS 'Rua do endereço';
-COMMENT ON COLUMN endereco_dp.bairro_endereco IS 'Bairro do endereço';
-COMMENT ON COLUMN endereco_dp.comp_endereco IS 'Complemento do endereço';
-COMMENT ON COLUMN endereco_dp.num_endereco IS 'Número do endereço';
