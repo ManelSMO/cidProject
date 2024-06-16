@@ -1,18 +1,17 @@
-drop table pessoa CASCADE;
+DROP TABLE IF EXISTS ocorrencia CASCADE;
 
-drop table funcionario CASCADE;
+DROP TABLE IF EXISTS bo CASCADE;
 
-drop table departamentopolicia;
+DROP TABLE IF EXISTS funcionario CASCADE;
 
-drop table ocorrencia;
+DROP TABLE IF EXISTS pessoa CASCADE;
 
-drop table tipo_ocorrencia;
+DROP TABLE IF EXISTS tipo_ocorrencia CASCADE;
 
-drop table bo;
+DROP TABLE IF EXISTS departamento_policia CASCADE;
 
-drop table endereco CASCADE;
+DROP TABLE IF EXISTS bairro CASCADE;
 
-drop table cidade;
+DROP TABLE IF EXISTS cidade CASCADE;
 
-drop table estado;
-
+DROP TABLE IF EXISTS estado CASCADE;
