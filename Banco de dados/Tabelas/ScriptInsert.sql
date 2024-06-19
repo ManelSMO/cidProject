@@ -38,11 +38,11 @@ INSERT into pessoa (cod_pessoa, generopessoa, idadepessoa, nom_pessoa, est_civil
 
 -- inserts dos funcionarios
 INSERT INTO funcionario (cod_fun, cargo_fun, cod_dp, dp_atuacao_fun, cod_pessoa) VALUES
-(1, 1, 1, 1, 1),
-(2, 2, 2, 2, 2),
-(3, 3, 3, 3, 3),
-(4, 4, 4, 4, 4),
-(5, 5, 5, 5, 5);
+(1, 'Delegado', 1, 1, 1),
+(2, 'Investigador', 2, 2, 2),
+(3, 'Escrivão', 3, 3, 3),
+(4, 'Perito Criminal', 4, 4, 4),
+(5, 'Agente', 5, 5, 5);
 
 -- insert de pessoas que não são funcionarios
 INSERT INTO pessoa (cod_pessoa, generopessoa, idadepessoa, nom_pessoa, est_civil_pessoa, data_nasc_pessoa, cpf_pessoa, num_tele_pessoa, email_pessoa, numero_enderecop, codbairrop) VALUES

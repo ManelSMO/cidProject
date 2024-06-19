@@ -88,7 +88,7 @@ comment on column pessoa.codbairrop is 'codigo do bairro da pessoa';
 -- Criação da tabela funcionario
 CREATE TABLE funcionario (
     cod_fun INT PRIMARY KEY,
-    cargo_fun INT NOT NULL,
+    cargo_fun varchar(50) NOT NULL,
     cod_dp INT REFERENCES departamento_policia(cod_dp),
     dp_atuacao_fun INT NOT NULL,
     cod_pessoa INT REFERENCES pessoa(cod_pessoa)
