@@ -8,11 +8,14 @@
 O Sistema CID - Criminal Incident Database foi desenvolvido para simplificar o acesso do cidadão ao serviço de registro de ocorrências policiais, possibilitando a comunicação on-line de crimes e eventos atípicos, bem como o registro automatizado dos boletins de ocorrência pela unidade policial responsável. Este projeto é parte das avaliações das disciplinas de Banco de Dados II, Engenharia de Software I e Programação II da Universidade do Oeste de Santa Catarina (UNOESC).
 </p>
 
+## Como Registrar um Boletim de Ocorrência Online no CID
+
 Para registrar um boletim de ocorrência on-line por meio do CID, o cidadão deve seguir os seguintes passos:
-    1. **Acessar o Portal do CID**.
-    2. **Preencher com seus dados pessoais**.
-    3. **Escolher a natureza da ocorrência**, como furto, roubo, acidente, entre outros.
-    4. **Fornecer dados adicionais**: incluir informações sobre os envolvidos e anexar documentos ou evidências relevantes para o registro do BO.
+
+1. **Acessar o Portal do CID**.
+2. **Preencher com seus dados pessoais**.
+3. **Escolher a natureza da ocorrência**, como furto, roubo, acidente, entre outros.
+4. **Fornecer dados adicionais**: incluir informações sobre os envolvidos e anexar documentos ou evidências relevantes para o registro do BO.
 
 O sistema visa agilizar o processo de comunicação com as autoridades e garantir que as ocorrências sejam registradas de forma rápida e eficiente, proporcionando maior comodidade aos cidadãos e facilitando o trabalho das unidades policiais.
 
