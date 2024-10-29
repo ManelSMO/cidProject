@@ -50,6 +50,7 @@ O sistema visa agilizar o processo de comunicação com as autoridades e garanti
 - 📁 Documentação do projeto
     - 📁 Diagramas UML
         - 📃 Modelo Relacional
+        - 📃 Diagrama de Requisitos
         - 📃 Diagrama de Sequência
         - 📃 Diagrama de Classes
         - 📃 Diagrama de Atividades
