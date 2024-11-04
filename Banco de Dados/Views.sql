@@ -15,17 +15,3 @@ JOIN funcionario f ON o.funcionarioidfun = f.idfun
 JOIN pessoa p ON f.pessoaidpes = p.idpes;
 ---
 
---- Vies para visualizar rapidamente o tipo de envolvimento de cada pessoa em uma ocorrência específica.
-CREATE VIEW vw_pessoas_envolvidas AS
-SELECT 
-    pe.idpesenv AS id_envolvimento,
-    pe.tipoenv AS tipo_envolvimento,
-    pe.descpesenv AS descricao_envolvimento,
-    o.idoco AS id_ocorrencia,
-    p.nompes AS nome_pessoa,
-    t.desctipoco AS tipo_ocorrencia
-FROM pessoa_envolvida pe
-JOIN ocorrencia o ON pe.ocorrenciaidoco = o.idoco
-JOIN pessoa p ON pe.pessoaidpes = p.idpes
-JOIN tipo_ocorrencia t ON o.tipo_ocorrenciaidtipoco = t.idtipoco;
----

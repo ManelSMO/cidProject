@@ -1,6 +1,6 @@
 --- FUNÇÔES ---------------
 
---- Calcula a idade
+-- Calcula a idade
 CREATE OR REPLACE FUNCTION calcular_idade_por_nome(nome_pessoa VARCHAR)
 RETURNS INT AS $$
 DECLARE
@@ -21,17 +21,16 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
----
-
---- Verifica se o cpf ja esta cadastrado no sistema
-CREATE OR REPLACE FUNCTION verificar_cpf_existente(cpf VARCHAR(11))
+-- Verifica se o CPF já está cadastrado no sistema
+CREATE OR REPLACE FUNCTION verificar_cpf_existente(cpf VARCHAR(13))
 RETURNS BOOLEAN AS $$
 DECLARE
     resultado BOOLEAN;
 BEGIN
-    SELECT EXISTS(SELECT 1 FROM pessoa WHERE cpfpes = cpf) INTO resultado;
+    -- Verifica se o CPF existe na tabela 'usuario'
+    SELECT EXISTS(SELECT 1 FROM usuario WHERE cpfusu = cpf) INTO resultado;
     RETURN resultado;
 END;
 $$ LANGUAGE plpgsql;
 
-select calcular_idade_por_nome ('Carlos Silva') as idade;
+
