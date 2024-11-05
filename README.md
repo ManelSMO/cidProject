@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="DocumentacaodoProjeto/Imagens/logo.png" width="300" alt="Logo">
+    <img src="Documentação do projeto/Imagens/logo.png" width="300" alt="Logo">
 </h1>
 
 ### 🕵️‍♂️ Sobre
@@ -86,7 +86,7 @@ Desenvolvedores do Projeto:
   <tr>
     <td align="center">
       <a href="#">
-        <img src="DocumentacaodoProjeto/Imagens/emanuel.jpg" width="100px;" alt="Emanuel"/><br>
+        <img src="Documentação do projeto/Imagens/emanuel.jpg" width="100px;" alt="Emanuel"/><br>
         <sub>
           <b>Emanuel Previatti</b>
         </sub>
@@ -94,7 +94,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="DocumentacaodoProjeto/Imagens/luan.jpeg" width="100px;" alt="Luan"/><br>
+        <img src="Documentação do projeto/Imagens/luan.jpeg" width="100px;" alt="Luan"/><br>
         <sub>
           <b>Luan Tenroller</b>
         </sub>
@@ -102,7 +102,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="DocumentacaodoProjeto/Imagens/luiz.jpeg" width="100px;" alt="Luiz"/><br>
+        <img src="Documentação do projeto/Imagens/luiz.jpeg" width="100px;" alt="Luiz"/><br>
         <sub>
           <b>Luiz Przygoda</b>
         </sub>
@@ -110,7 +110,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="DocumentacaodoProjeto/Imagens/maria.jpeg" width="90px;" alt="Maria"/><br>
+        <img src="Documentação do projeto/Imagens/maria.jpeg" width="90px;" alt="Maria"/><br>
         <sub>
           <b>Maria Cecília</b>
         </sub>
@@ -118,7 +118,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="DocumentacaodoProjeto/Imagens/nathaly.jpeg" width="100px;" alt="Nathaly"/><br>
+        <img src="Documentação do projeto/Imagens/nathaly.jpeg" width="100px;" alt="Nathaly"/><br>
         <sub>
           <b>Nathaly Nascimento</b>
         </sub>
@@ -126,7 +126,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="DocumentacaodoProjeto/Imagens/vini.jpeg" width="90px;" alt="Vinicius"/><br>
+        <img src="Documentação do projeto/Imagens/vini.jpeg" width="90px;" alt="Vinicius"/><br>
         <sub>
           <b>Vinicius Wille</b>
         </sub>
