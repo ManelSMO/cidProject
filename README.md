@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="Imagens/logo.png" width="300" alt="Logo">
+    <img src="Documentação do Projeto/Imagens/logo.png" width="300" alt="Logo">
 </h1>
 
 ### 🕵️‍♂️ Sobre
