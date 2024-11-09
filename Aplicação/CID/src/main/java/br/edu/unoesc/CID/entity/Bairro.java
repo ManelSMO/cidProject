@@ -8,10 +8,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "bairro")
-public class Bairro extends Cidade{
-    @Column()
+public class Bairro{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idbai", nullable = false)
+    protected long idBairro;
+
+    @Column(name = "nombai", nullable = false)
     protected String nomeBairro;
 
     @ManyToOne
     protected EnderecoPessoa enderecoPessoa;
+
 }

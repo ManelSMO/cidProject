@@ -12,9 +12,13 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idusu",nullable = false)
     protected long idUsuario;
 
+    @Column(name = "cpfusu", nullable = false)
     protected String cpfPessoa;
-    protected String senha;
+
+    @Column(name = "senusu", nullable = false)
+    protected String senhaUsuario;
 
 }

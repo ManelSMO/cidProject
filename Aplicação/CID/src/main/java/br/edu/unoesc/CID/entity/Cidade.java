@@ -8,8 +8,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "cidade")
-public class Cidade extends Estado {
+public class Cidade {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idcid", nullable = false)
+    protected long idCidade;
+
+    @Column(name = "nomcid", nullable = false)
     protected String nomeCidade;
 
     @ManyToOne
