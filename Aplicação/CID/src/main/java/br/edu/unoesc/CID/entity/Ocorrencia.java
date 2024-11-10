@@ -14,7 +14,7 @@ public class Ocorrencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int idOcorrencia;
+    protected long idOcorrencia;
 
     @Column(name = "descoco")
     protected String descricaoOcorrencia;
