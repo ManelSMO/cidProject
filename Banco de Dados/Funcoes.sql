@@ -21,6 +21,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
 -- Verifica se o CPF já está cadastrado no sistema
 CREATE OR REPLACE FUNCTION verificar_cpf_existente(cpf VARCHAR(13))
 RETURNS BOOLEAN AS $$
@@ -32,5 +33,6 @@ BEGIN
     RETURN resultado;
 END;
 $$ LANGUAGE plpgsql;
+
 
 

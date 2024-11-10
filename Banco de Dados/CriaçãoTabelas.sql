@@ -1,202 +1,203 @@
-
--- Tabela de países
+-- Tabela pais
 CREATE TABLE pais (
-    idpais SERIAL NOT NULL, 
-    nompais VARCHAR(50) NOT NULL, 
+    idpais SERIAL NOT NULL,
+    nompais VARCHAR(50) NOT NULL,
     PRIMARY KEY (idpais)
 );
-COMMENT ON COLUMN pais.idpais IS 'ID do país';
-COMMENT ON COLUMN pais.nompais IS 'Nome do país';
+COMMENT ON COLUMN pais.idpais IS 'Id do pais';
+COMMENT ON COLUMN pais.nompais IS 'Nome do pais';
 
--- Tabela de tipos de ocorrência
+-- Tabela tipo de envolvimento
+CREATE TABLE tipo_envolvimento (
+    tipenv VARCHAR(255) NOT NULL,
+    desctipenv TEXT NOT NULL,
+    PRIMARY KEY (tipenv)
+);
+COMMENT ON COLUMN tipo_envolvimento.tipenv IS 'Tipo do envolvimento';
+COMMENT ON COLUMN tipo_envolvimento.desctipenv IS 'Descrição do tipo do envolvimento';
+
 CREATE TABLE tipo_ocorrencia (
-    idtipoco SERIAL NOT NULL, 
-    desctipoco VARCHAR(255) NOT NULL, 
+    idtipoco SERIAL NOT NULL,
+    desctipoco VARCHAR(255) NOT NULL,
     PRIMARY KEY (idtipoco)
 );
-COMMENT ON COLUMN tipo_ocorrencia.idtipoco IS 'Código do tipo de ocorrência';
-COMMENT ON COLUMN tipo_ocorrencia.desctipoco IS 'Descrição do acontecimento';
+COMMENT ON COLUMN tipo_ocorrencia.idtipoco IS 'Codigo do tipo de ocorrencia';
+COMMENT ON COLUMN tipo_ocorrencia.desctipoco IS 'Descricao do acontecimento';
 
--- Tabela de usuários
+CREATE TABLE tipo_violencia (
+    idtipvio VARCHAR(40) NOT NULL,
+    desctipvio VARCHAR(255),
+    PRIMARY KEY (idtipvio)
+);
+COMMENT ON TABLE tipo_violencia IS 'Tabela dos tipos de violencia';
+COMMENT ON COLUMN tipo_violencia.desctipvio IS 'descrição da violencia';
+
 CREATE TABLE usuario (
-    idusu SERIAL NOT NULL, 
-    cpfusu VARCHAR(13) NOT NULL UNIQUE, 
-    senusu VARCHAR(30) NOT NULL, 
+    idusu SERIAL NOT NULL,
+    cpfusu VARCHAR(13) NOT NULL UNIQUE,
+    senusu VARCHAR(30) NOT NULL,
     PRIMARY KEY (idusu)
 );
-COMMENT ON COLUMN usuario.cpfusu IS 'CPF do usuário';
-COMMENT ON COLUMN usuario.senusu IS 'Senha do usuário';
+COMMENT ON COLUMN usuario.cpfusu IS 'cpf do Usuario';
+COMMENT ON COLUMN usuario.senusu IS 'Senha do usuario';
 
--- Tabelas com chaves estrangeiras
-
--- Tabela de estados
 CREATE TABLE estado (
-    idest SERIAL NOT NULL, 
-    siglaest CHAR(2) NOT NULL, 
-    nomest VARCHAR(80) NOT NULL, 
-    paisidpais INT4 NOT NULL, 
+    idest SERIAL NOT NULL,
+    siglaest CHAR(2) NOT NULL,
+    nomest VARCHAR(80) NOT NULL,
+    paisidpais INT4 NOT NULL,
     PRIMARY KEY (idest),
-    CONSTRAINT FKestado409842 FOREIGN KEY (paisidpais) REFERENCES pais (idpais)
+    FOREIGN KEY (paisidpais) REFERENCES pais (idpais)
 );
 COMMENT ON COLUMN estado.siglaest IS 'Sigla do estado';
-COMMENT ON COLUMN estado.nomest IS 'Nome do estado';
+COMMENT ON COLUMN estado.nomest IS 'Nome do Estado';
 
--- Tabela de cidades
 CREATE TABLE cidade (
-    idcid SERIAL NOT NULL, 
-    nomcid VARCHAR(80) NOT NULL, 
-    estadoidest INT4 NOT NULL, 
+    idcid SERIAL NOT NULL,
+    nomcid VARCHAR(80) NOT NULL,
+    estadoidest INT4 NOT NULL,
     PRIMARY KEY (idcid),
-    CONSTRAINT FKcidade432616 FOREIGN KEY (estadoidest) REFERENCES estado (idest)
+    FOREIGN KEY (estadoidest) REFERENCES estado (idest)
 );
 COMMENT ON TABLE cidade IS 'Tabela de cidades';
 COMMENT ON COLUMN cidade.nomcid IS 'Nome da cidade';
 
--- Tabela de bairros
 CREATE TABLE bairro (
-    idbai SERIAL NOT NULL, 
-    nombai VARCHAR(80) NOT NULL, 
-    estadoidest INT4 NOT NULL, 
+    idbai SERIAL NOT NULL,
+    nombai VARCHAR(80) NOT NULL,
+    estadoidest INT4 NOT NULL,
     PRIMARY KEY (idbai),
-    CONSTRAINT FKbairro284235 FOREIGN KEY (estadoidest) REFERENCES estado (idest)
+    FOREIGN KEY (estadoidest) REFERENCES estado (idest)
 );
 COMMENT ON TABLE bairro IS 'Tabela de Bairros';
 COMMENT ON COLUMN bairro.nombai IS 'Nome do bairro';
 
--- Tabela de endereços de pessoas
-CREATE TABLE endereco_pessoa (
-    idendpes SERIAL NOT NULL, 
-    logrpes VARCHAR(80) NOT NULL, 
-    numendpes INT4 NOT NULL, 
-    comendpes VARCHAR(255), 
-    bairroidbai INT4 NOT NULL, 
-    cidadeidcid INT4 NOT NULL, 
-    PRIMARY KEY (idendpes),
-    CONSTRAINT FKendereco_p368365 FOREIGN KEY (bairroidbai) REFERENCES bairro (idbai),
-    CONSTRAINT FKendereco_p287486 FOREIGN KEY (cidadeidcid) REFERENCES cidade (idcid)
-);
-COMMENT ON COLUMN endereco_pessoa.logrpes IS 'Rua ou avenida';
-COMMENT ON COLUMN endereco_pessoa.numendpes IS 'Número do imóvel da pessoa';
-COMMENT ON COLUMN endereco_pessoa.comendpes IS 'Complemento';
-
--- Tabela de endereços dos departamentos policiais
-CREATE TABLE endereco_departamento (
-    idenddp SERIAL NOT NULL, 
-    logrdp VARCHAR(255) NOT NULL, 
-    numenddp INT4 NOT NULL, 
-    bairroidbai INT4 NOT NULL, 
-    cidadeidcid INT4 NOT NULL, 
-    PRIMARY KEY (idenddp),
-    CONSTRAINT FKendereco_d754178 FOREIGN KEY (bairroidbai) REFERENCES bairro (idbai),
-    CONSTRAINT FKendereco_d901672 FOREIGN KEY (cidadeidcid) REFERENCES cidade (idcid)
-);
-COMMENT ON TABLE endereco_departamento IS 'Tabela de endereços dos departamentos de polícia';
-COMMENT ON COLUMN endereco_departamento.logrdp IS 'Rua ou avenida';
-COMMENT ON COLUMN endereco_departamento.numenddp IS 'Número do imóvel do departamento de polícia';
-
--- Tabela de departamentos policiais
 CREATE TABLE departamento_policial (
-    iddep SERIAL NOT NULL, 
-    disdep VARCHAR(255) NOT NULL, 
-    emaildep VARCHAR(40) NOT NULL, 
-    telatedep NUMERIC(14, 0) NOT NULL, 
-    enddp INT4 NOT NULL, 
+    iddep SERIAL NOT NULL,
+    disdep VARCHAR(255) NOT NULL,
+    emaildep VARCHAR(40) NOT NULL,
+    telatedep NUMERIC(14, 0) NOT NULL,
+    logrdp INT4 NOT NULL,
+    numdp INT4 NOT NULL,
+    bairroidbai INT4 NOT NULL,
+    cidadeidcid INT4 NOT NULL,
     PRIMARY KEY (iddep),
-    CONSTRAINT FKdepartamen408914 FOREIGN KEY (enddp) REFERENCES endereco_departamento (idenddp)
+    FOREIGN KEY (bairroidbai) REFERENCES bairro (idbai) ON DELETE CASCADE,
+    FOREIGN KEY (cidadeidcid) REFERENCES cidade (idcid) ON DELETE CASCADE
 );
-COMMENT ON COLUMN departamento_policial.iddep IS 'Código do departamento de polícia';
+COMMENT ON COLUMN departamento_policial.iddep IS 'Código do departamento de policia';
 COMMENT ON COLUMN departamento_policial.disdep IS 'Distrito do DP';
-COMMENT ON COLUMN departamento_policial.emaildep IS 'Email do DP';
-COMMENT ON COLUMN departamento_policial.telatedep IS 'Telefone de atendimento do DP';
-COMMENT ON COLUMN departamento_policial.enddp IS 'Endereço do departamento';
+COMMENT ON COLUMN departamento_policial.emaildep IS 'Email da Dp';
+COMMENT ON COLUMN departamento_policial.telatedep IS 'Telefone de atendimento da Dp';
+COMMENT ON COLUMN departamento_policial.logrdp IS 'Logradouro do departamento';
+COMMENT ON COLUMN departamento_policial.numdp IS 'Numero da residencia do departamento';
 
--- Tabela de pessoas
 CREATE TABLE pessoa (
-    idpes SERIAL NOT NULL, 
-    nompes VARCHAR(80) NOT NULL, 
-    estcivpes VARCHAR(40) NOT NULL, 
-    datnaspes DATE NOT NULL, 
-    numtelpes NUMERIC(14, 0) NOT NULL, 
-    emailpes VARCHAR(255) NOT NULL, 
-    genpes VARCHAR(15) NOT NULL, 
-    endpes INT4 NOT NULL, 
-    usuarioidusu INT4 NOT NULL, 
+    idpes SERIAL NOT NULL,
+    nompes VARCHAR(80) NOT NULL,
+    estcivpes VARCHAR(40) NOT NULL,
+    datnaspes DATE NOT NULL CHECK (datnaspes <= CURRENT_DATE),
+    numtelpes NUMERIC(14, 0) NOT NULL CHECK (numtelpes > 0),
+    emailpes VARCHAR(255) NOT NULL CHECK (emailpes LIKE '%@%'),
+    genpes VARCHAR(15) NOT NULL CHECK (genpes IN ('Masculino', 'Feminino', 'Outro')),
+    usuarioidusu INT4 NOT NULL,
+    Fotpes BYTEA,
     PRIMARY KEY (idpes),
-    CONSTRAINT FKpessoa888829 FOREIGN KEY (endpes) REFERENCES endereco_pessoa (idendpes),
-    CONSTRAINT FKpessoa913091 FOREIGN KEY (usuarioidusu) REFERENCES usuario (idusu)
+    FOREIGN KEY (usuarioidusu) REFERENCES usuario (idusu)
 );
 COMMENT ON TABLE pessoa IS 'Tabela de pessoas para registrar o BO';
-COMMENT ON COLUMN pessoa.idpes IS 'Código da pessoa';
+COMMENT ON COLUMN pessoa.idpes IS 'Codigo Pessoa';
 COMMENT ON COLUMN pessoa.nompes IS 'Nome da pessoa';
-COMMENT ON COLUMN pessoa.estcivpes IS 'Estado civil da pessoa';
+COMMENT ON COLUMN pessoa.estcivpes IS 'Estado civil da Pessoa';
 COMMENT ON COLUMN pessoa.datnaspes IS 'Data de nascimento da pessoa';
-COMMENT ON COLUMN pessoa.numtelpes IS 'Número de telefone da pessoa';
+COMMENT ON COLUMN pessoa.numtelpes IS 'numero de telefone da pessoa';
 COMMENT ON COLUMN pessoa.emailpes IS 'E-mail da pessoa';
-COMMENT ON COLUMN pessoa.genpes IS 'Gênero da pessoa';
-COMMENT ON COLUMN pessoa.endpes IS 'Endereço da pessoa';
+COMMENT ON COLUMN pessoa.genpes IS 'Genêro da pessoa';
+COMMENT ON COLUMN pessoa.Fotpes IS 'Foto da Pessoa';
 
--- Tabela de funcionários
 CREATE TABLE funcionario (
-    idfun SERIAL NOT NULL, 
-    carfun VARCHAR(255) NOT NULL, 
-    delfun INT4 NOT NULL, 
-    departamento_policiaiddep INT4 NOT NULL, 
-    pessoaidpes INT4 NOT NULL, 
-    PRIMARY KEY (idfun),
-    CONSTRAINT FKfuncionari593755 FOREIGN KEY (departamento_policiaiddep) REFERENCES departamento_policial (iddep),
-    CONSTRAINT FKfuncionari693404 FOREIGN KEY (pessoaidpes) REFERENCES pessoa (idpes)
+    pessoaidpes INT4 NOT NULL,
+    carfun VARCHAR(255) NOT NULL,
+    departamento_policiaiddep INT4 NOT NULL,
+    PRIMARY KEY (pessoaidpes),
+    FOREIGN KEY (pessoaidpes) REFERENCES pessoa (idpes),
+    FOREIGN KEY (departamento_policiaiddep) REFERENCES departamento_policial (iddep)
 );
-COMMENT ON COLUMN funcionario.idfun IS 'Código do funcionário';
-COMMENT ON COLUMN funcionario.carfun IS 'Cargo do funcionário';
-COMMENT ON COLUMN funcionario.delfun IS 'DP onde o funcionário atua';
+COMMENT ON COLUMN funcionario.carfun IS 'Cargo do funcionario';
 
--- Tabela de ocorrências
+CREATE TABLE endereco_pessoa (
+    idendpes SERIAL NOT NULL,
+    logrpes VARCHAR(80) NOT NULL,
+    numendpes INT4 NOT NULL,
+    comendpes VARCHAR(255),
+    bairroidbai INT4 NOT NULL,
+    cidadeidcid INT4 NOT NULL,
+    pessoaidpes INT4 NOT NULL,
+    PRIMARY KEY (idendpes),
+    FOREIGN KEY (pessoaidpes) REFERENCES pessoa (idpes),
+    FOREIGN KEY (bairroidbai) REFERENCES bairro (idbai) ON DELETE CASCADE,
+    FOREIGN KEY (cidadeidcid) REFERENCES cidade (idcid) ON DELETE CASCADE
+);
+COMMENT ON COLUMN endereco_pessoa.logrpes IS 'Rua ou avenida';
+COMMENT ON COLUMN endereco_pessoa.numendpes IS 'Numero do imovel da pessoa';
+COMMENT ON COLUMN endereco_pessoa.comendpes IS 'Complemento';
+
 CREATE TABLE ocorrencia (
-    idoco SERIAL NOT NULL, 
-    datoco DATE, 
-    vio BOOLEAN, 
-    lococo VARCHAR(255) NOT NULL, 
-    cidadeidcid INT4 NOT NULL, 
-    tipo_ocorrenciaidtipoco INT4 NOT NULL, 
-    funcionarioidfun INT4 NOT NULL, 
+    idoco SERIAL NOT NULL,
+    descoco TEXT,
+    datoco TIMESTAMP,
+    lococo VARCHAR(255) NOT NULL,
+    staoco INT4 NOT NULL,
+    cidadeidcid INT4 NOT NULL,
+    funcionariopessoaidpes INT4 NOT NULL,
+    tipo_violenciaidtipooco VARCHAR(40) NOT NULL,
+    tipo_ocorrenciaidtipoco INT4 NOT NULL,
     PRIMARY KEY (idoco),
-    CONSTRAINT FKocorrencia989834 FOREIGN KEY (cidadeidcid) REFERENCES cidade (idcid),
-    CONSTRAINT FKocorrencia750208 FOREIGN KEY (tipo_ocorrenciaidtipoco) REFERENCES tipo_ocorrencia (idtipoco),
-    CONSTRAINT FKocorrencia32044 FOREIGN KEY (funcionarioidfun) REFERENCES funcionario (idfun)
+    FOREIGN KEY (cidadeidcid) REFERENCES cidade (idcid),
+    FOREIGN KEY (funcionariopessoaidpes) REFERENCES funcionario (pessoaidpes),
+    FOREIGN KEY (tipo_violenciaidtipooco) REFERENCES tipo_violencia (idtipvio),
+    FOREIGN KEY (tipo_ocorrenciaidtipoco) REFERENCES tipo_ocorrencia (idtipoco)
 );
-COMMENT ON TABLE ocorrencia IS 'Tabela de ocorrências';
-COMMENT ON COLUMN ocorrencia.idoco IS 'Código da ocorrência';
-COMMENT ON COLUMN ocorrencia.datoco IS 'Data da ocorrência';
-COMMENT ON COLUMN ocorrencia.vio IS 'Indica se houve violência na ocorrência';
-COMMENT ON COLUMN ocorrencia.lococo IS 'Local da ocorrência';
+COMMENT ON TABLE ocorrencia IS 'Tabela de Ocorrências';
+COMMENT ON COLUMN ocorrencia.idoco IS 'Codigo da ocorrencia';
+COMMENT ON COLUMN ocorrencia.descoco IS 'Descrição da ocorrencia';
+COMMENT ON COLUMN ocorrencia.datoco IS 'Data que aconteceu da ocorrencia';
+COMMENT ON COLUMN ocorrencia.lococo IS 'Local da ocorrencia';
+COMMENT ON COLUMN ocorrencia.staoco IS 'Status da ocorrencia';
 
--- Tabela de anexos
-CREATE TABLE anexo (
-    idanexo SERIAL NOT NULL, 
-    camane VARCHAR(255) NOT NULL, 
-    tipoanexo VARCHAR(255) NOT NULL, 
-    descanexo TEXT, 
-    datanexo DATE NOT NULL, 
-    ocorrenciaidoco INT4 NOT NULL, 
-    PRIMARY KEY (idanexo),
-    CONSTRAINT FKanexo376378 FOREIGN KEY (ocorrenciaidoco) REFERENCES ocorrencia (idoco)
-);
-COMMENT ON COLUMN anexo.camane IS 'Caminho do arquivo anexado';
-COMMENT ON COLUMN anexo.tipoanexo IS 'Tipo do anexo (vídeo, imagem, documento...)';
-COMMENT ON COLUMN anexo.descanexo IS 'Descrição do anexo';
-COMMENT ON COLUMN anexo.datanexo IS 'Data que o anexo foi adicionado';
-
--- Tabela de pessoas envolvidas em ocorrências
 CREATE TABLE pessoa_envolvida (
-    idpesenv SERIAL NOT NULL, 
-    nompesenv VARCHAR(80), 
-    tipoenv VARCHAR(255) NOT NULL, 
-    descpesenv VARCHAR(255), 
-    ocorrenciaidoco INT4 NOT NULL, 
+    idpesenv SERIAL NOT NULL,
+    nompesenv VARCHAR(80),
+    descpesenv VARCHAR(255),
+    cpfenv VARCHAR(11),
+    telenv NUMERIC(14, 0) CHECK (telenv > 0),
+    datnasenv DATE CHECK (datnasenv <= CURRENT_DATE),
+    emailenv varchar(80),
+    ocorrenciaidoco INT4 NOT NULL,
+    tipo_envolvimentotipenv VARCHAR(255) NOT NULL,
     PRIMARY KEY (idpesenv),
-    CONSTRAINT FKpessoa_env508213 FOREIGN KEY (ocorrenciaidoco) REFERENCES ocorrencia (idoco)
+    FOREIGN KEY (ocorrenciaidoco) REFERENCES ocorrencia (idoco) ON DELETE CASCADE,
+    FOREIGN KEY (tipo_envolvimentotipenv) REFERENCES tipo_envolvimento (tipenv) ON DELETE CASCADE
 );
 COMMENT ON TABLE pessoa_envolvida IS 'Tabela de pessoas envolvidas';
 COMMENT ON COLUMN pessoa_envolvida.nompesenv IS 'Nome da pessoa envolvida';
-COMMENT ON COLUMN pessoa_envolvida.tipoenv IS 'Tipo de envolvimento';
 COMMENT ON COLUMN pessoa_envolvida.descpesenv IS 'Descrição da pessoa envolvida';
+COMMENT ON COLUMN pessoa_envolvida.cpfenv IS 'Cpf da pessoa envolvida';
+COMMENT ON COLUMN pessoa_envolvida.telenv IS 'Telefone da pessoa envolvida';
+COMMENT ON COLUMN pessoa_envolvida.datnasenv IS 'Data de nascimento da pessoa envolvida';
+COMMENT ON COLUMN pessoa_envolvida.emailenv IS 'Email da pessoa envolvida';
+
+CREATE TABLE anexo (
+    idanexo SERIAL NOT NULL,
+    camane VARCHAR(255) NOT NULL,
+    tipoanexo VARCHAR(255) NOT NULL CHECK (tipoanexo IN ('imagem', 'video', 'documento')),
+    descanexo TEXT,
+    datanexo TIMESTAMP NOT NULL,
+    ocorrenciaidoco INT4 NOT NULL,
+    PRIMARY KEY (idanexo),
+    FOREIGN KEY (ocorrenciaidoco) REFERENCES ocorrencia (idoco)
+);
+COMMENT ON COLUMN anexo.camane IS 'Caminho do arquivo anexado';
+COMMENT ON COLUMN anexo.tipoanexo IS 'Tipo do anexo (video, imagem, documento...)';
+COMMENT ON COLUMN anexo.descanexo IS 'Descrição do anexo';
+COMMENT ON COLUMN anexo.datanexo IS 'Data que o anexo foi carregado';
