@@ -79,6 +79,7 @@ O sistema visa agilizar o processo de comunicação com as autoridades e garanti
 - Postman
 - Java
 - SpringBot
+- Next.js 
 #
 
 ### ✒️ Autores
