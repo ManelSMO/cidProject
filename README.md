@@ -47,7 +47,9 @@ O sistema visa agilizar o processo de comunicação com as autoridades e garanti
 #
 
 ### 📦 Estrutura de Pastas
-- 📁 Aplicação/CID
+- 📁 Aplicação
+  - 📁 Backend
+  - 📁 Frontend
 - 📁 Banco de Dados
 - 📁 Documentação do projeto
     - 📁 Diagramas UML

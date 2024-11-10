@@ -1,0 +1,134 @@
+/* src/components/Home.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #efecec;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 45px;
+  }
+  
+  .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo img {
+    width: 450px;
+    height: auto;
+  }
+  
+  .title {
+    font-size: 1.8em;
+    color: #b22222;
+    margin-bottom: 40px;
+  }
+
+  .titleCustom {
+    font-size: 1.8em;
+    color: #b22222;
+    font-family: 'Poppins', serif; /* Aplica a fonte especificada */
+    margin-bottom: 40px;
+  }
+  
+  .options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+  }
+  
+  .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    color: #555;
+    transition: transform 0.2s ease;
+  }
+  
+  .option:hover {
+    transform: scale(1.05);
+  }
+  
+  .option .cidadao-icon {
+    width: 212px;
+    height: 230px;
+    margin-bottom: 10px;
+  }
+  
+  .option .policial-icon {
+    width: 212px;
+    height: 224px;
+    margin-bottom: 10px;
+  }
+  
+/* Responsividade */
+@media (max-width: 1024px) {
+    .logo img {
+      width: 280px; /* Aumenta um pouco o tamanho do logo em telas médias */
+    }
+  
+    .title {
+      font-size: 1.5em;
+    }
+  
+    .option .cidadao-icon,
+    .option .policial-icon {
+      width: 160px;
+      height: 170px;
+    }
+  
+    .options {
+      gap: 60px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .logo img {
+      width: 300px; /* Aumenta mais o logo em telas menores */
+    }
+  
+    .title {
+      font-size: 1.3em;
+    }
+  
+    .option .cidadao-icon,
+    .option .policial-icon {
+      width: 140px;
+      height: 148px;
+    }
+  
+    .options {
+      flex-direction: column;
+      gap: 40px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .logo img {
+      width: 320px; /* Aumenta ainda mais o logo em dispositivos muito pequenos */
+    }
+  
+    .title {
+      font-size: 1.2em;
+    }
+  
+    .option .cidadao-icon,
+    .option .policial-icon {
+      width: 120px;
+      height: 127px;
+    }
+  
+    .options {
+      gap: 20px;
+    }
+  }
+  
+  
