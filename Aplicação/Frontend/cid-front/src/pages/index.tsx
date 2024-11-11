@@ -5,21 +5,12 @@ import LoginCidadao from '../components/LoginCidadao';
 import LoginPolicial from '../components/LoginPolicial';
 import CadastroCidadao from '../components/CadastroCidadao';
 import CadastroPolicial from '../components/CadastroPolicial';
-
-// Componente do Menu principal
-function Menu() {
-  return (
-    <div>
-      <h1>Bem-vindo ao Menu Principal</h1>
-      <p>Esta é a página de menu. Você pode adicionar os componentes de navegação aqui.</p>
-    </div>
-  );
-}
+import Menu from '../components/Menu'; // Importe o novo componente Menu
 
 const Index: React.FC = () => {
   // Estado para controlar qual página exibir
   const [activePage, setActivePage] = useState<
-    'home' | 'loginCidadao' | 'loginPolicial' | 'cadastroCidadao' | 'cadastroPolicial' | 'menu'
+    'home' | 'loginCidadao' | 'loginPolicial' | 'cadastroCidadao' | 'cadastroPolicial' | 'menu' | 'registrarBoletim' | 'consultarBoletins'
   >('home');
 
   // Funções para alterar o estado e mostrar as páginas corretas
@@ -27,8 +18,10 @@ const Index: React.FC = () => {
   const showLoginPolicial = () => setActivePage('loginPolicial');
   const showCadastroCidadao = () => setActivePage('cadastroCidadao');
   const showCadastroPolicial = () => setActivePage('cadastroPolicial');
-  const showMenu = () => setActivePage('menu'); // Função para exibir o menu
-  const goHome = () => setActivePage('home'); // Função para retornar ao home
+  const showMenu = () => setActivePage('menu');
+  const goHome = () => setActivePage('home');
+  const showRegistrarBoletim = () => setActivePage('registrarBoletim'); // Função para ir ao Registrar Boletim
+  const showConsultarBoletins = () => setActivePage('consultarBoletins'); // Função para ir ao Consultar Boletins
 
   // Funções para redirecionamento após criação de conta
   const onCitizenAccountCreated = () => setActivePage('loginCidadao');
@@ -51,7 +44,11 @@ const Index: React.FC = () => {
       {activePage === 'cadastroPolicial' && (
         <CadastroPolicial onAccountCreated={onPoliceAccountCreated} onBackToLogin={showLoginPolicial} />
       )}
-      {activePage === 'menu' && <Menu />}
+      {activePage === 'menu' && (
+        <Menu onRegisterClick={showRegistrarBoletim} onConsultClick={showConsultarBoletins} />
+      )}
+      {activePage === 'registrarBoletim' && <div>Registrar Boletim de Ocorrência (Placeholder)</div>}
+      {activePage === 'consultarBoletins' && <div>Consultar Meus Boletins de Ocorrência (Placeholder)</div>}
     </>
   );
 };

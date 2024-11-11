@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .logo {
+    width: 350px;
+    margin-bottom: 70px;
+  }
+  
+  .buttonsContainer {
+    display: flex;
+    gap: 80px; /*espaço entre as caixas */
+  }
+  
+  .button {
+    background-color: #b22222;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    width: 200px; /* Diminua a largura para reduzir o tamanho das caixas */
+    height: 150px; /* Diminua a altura para reduzir o tamanho das caixas */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+  
+  .button:hover {
+    background-color: #8b1a1a;
+  }
+  
