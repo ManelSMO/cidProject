@@ -13,7 +13,6 @@ export default function Home({ onCitizenClick, onPoliceClick }: HomeProps) {
     <div className={styles.container}>
       <div className={styles.logo}>
         <Image src="/image/logo.png" alt="CID Logo" width={150} height={100} quality={100} />
-        <h1>Criminal Incident Database</h1>
       </div>
       <p className={styles.titleCustom}>Selecione uma opção:</p>
       <div className={styles.options}>

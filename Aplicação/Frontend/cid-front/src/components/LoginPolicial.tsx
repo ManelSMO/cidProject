@@ -19,12 +19,12 @@ export default function LoginPolicial({ onLoginSuccess }: LoginPolicialProps) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Image src="/image/policial.png" alt="Policial" width={40} height={40} />
+        <Image src="/image/policial.png" alt="Policial" width={50} height={50} />
       </div>
       <div className={styles.logo}>
         <Image src="/image/logo.png" alt="CID Logo" width={200} height={100} />
       </div>
-      <h2 className={styles.title}>Por favor informe seus dados de acesso.</h2>
+      <h2 className={styles.title}>Por favor, informe seus dados de acesso.</h2>
       <form className={styles.form} onSubmit={handleLogin}>
         <label className={styles.formLabel}>
           <input

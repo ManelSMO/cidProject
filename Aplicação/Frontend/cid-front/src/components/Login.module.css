@@ -18,14 +18,15 @@
 }
 
 .logo img {
-  width: 250px;
+  width: 350px;
   height: auto;
 }
 
 .title {
   color: #b22222;
-  font-size: 1.8em;
+  font-size: 1.3em;
   margin-bottom: 20px;
+  text-align: left;
 }
 
 .form {
