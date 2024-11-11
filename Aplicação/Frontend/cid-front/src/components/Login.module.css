@@ -1,0 +1,102 @@
+/* src/components/Login.module.css */
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  text-align: center;
+}
+
+.header {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.logo img {
+  width: 250px;
+  height: auto;
+}
+
+.title {
+  color: #b22222;
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formLabel {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.inputField {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #efecec;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.options a {
+  color: #b22222;
+  margin-bottom: 5px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.submitButton {
+  width: 100%;
+  background-color: #b22222;
+  color: #fff;
+  padding: 10px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.submitButton:hover {
+  background-color: #8b1a1a;
+}
+
+.criarConta {
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+
+.criarConta a {
+  color: #b22222;
+  text-decoration: none;
+}
+
+.criarConta a:hover {
+  text-decoration: underline;
+}

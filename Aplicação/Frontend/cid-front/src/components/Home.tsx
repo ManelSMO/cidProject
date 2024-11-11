@@ -2,16 +2,22 @@
 import Image from 'next/image';
 import styles from './Home.module.css';
 
-export default function Home() {
+// Define as propriedades esperadas pelo componente Home
+interface HomeProps {
+  onCitizenClick: () => void;
+  onPoliceClick: () => void;
+}
+
+export default function Home({ onCitizenClick, onPoliceClick }: HomeProps) {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <Image src="/image/logo.png" alt="CID Logo" width={150} height={100} />
+        <Image src="/image/logo.png" alt="CID Logo" width={150} height={100} quality={100} />
         <h1>Criminal Incident Database</h1>
       </div>
-      <p className={styles.titleCustom}>Selecione uma opção:</p> {/* Alterado para titleCustom */}
+      <p className={styles.titleCustom}>Selecione uma opção:</p>
       <div className={styles.options}>
-        <div className={styles.option}>
+        <div className={styles.option} onClick={onCitizenClick} style={{ cursor: 'pointer' }}>
           <Image
             src="/image/cidadao.png"
             alt="Cidadão"
@@ -21,7 +27,7 @@ export default function Home() {
           />
           <p>Cidadão</p>
         </div>
-        <div className={styles.option}>
+        <div className={styles.option} onClick={onPoliceClick} style={{ cursor: 'pointer' }}>
           <Image
             src="/image/policial.png"
             alt="Policial"
@@ -35,8 +41,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-
-
-
