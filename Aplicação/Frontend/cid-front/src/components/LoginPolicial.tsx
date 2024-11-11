@@ -4,9 +4,10 @@ import styles from './Login.module.css';
 
 interface LoginPolicialProps {
   onLoginSuccess: () => void;
+  onCreateAccountClick: () => void;
 }
 
-export default function LoginPolicial({ onLoginSuccess }: LoginPolicialProps) {
+export default function LoginPolicial({ onLoginSuccess, onCreateAccountClick }: LoginPolicialProps) {
   const [matricula, setMatricula] = useState('');
   const [senha, setSenha] = useState('');
   const [manterConectado, setManterConectado] = useState(false);
@@ -19,10 +20,10 @@ export default function LoginPolicial({ onLoginSuccess }: LoginPolicialProps) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Image src="/image/policial.png" alt="Policial" width={50} height={50} />
+        <Image src="/image/policial.png" alt="Policial" width={60} height={60} />
       </div>
       <div className={styles.logo}>
-        <Image src="/image/logo.png" alt="CID Logo" width={200} height={100} />
+        <img src="/image/logo.png" alt="CID Logo" className={styles.logo} />
       </div>
       <h2 className={styles.title}>Por favor, informe seus dados de acesso.</h2>
       <form className={styles.form} onSubmit={handleLogin}>
@@ -60,8 +61,9 @@ export default function LoginPolicial({ onLoginSuccess }: LoginPolicialProps) {
         <button type="submit" className={styles.submitButton}>Entrar</button>
       </form>
       <div className={styles.criarConta}>
-        Não possui conta? <a href="#">Criar conta</a>
+        Não possui conta? <a href="#" onClick={onCreateAccountClick}>Criar conta</a>
       </div>
     </div>
   );
 }
+

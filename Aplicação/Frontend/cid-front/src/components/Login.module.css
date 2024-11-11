@@ -14,10 +14,10 @@
 }
 
 .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
-}
-
-.logo img {
   width: 350px;
   height: auto;
 }

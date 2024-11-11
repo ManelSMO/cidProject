@@ -80,6 +80,8 @@ O sistema visa agilizar o processo de comunicação com as autoridades e garanti
 - Java
 - SpringBot
 - Next.js 
+- TypeScript
+- React
 #
 
 ### ✒️ Autores
