@@ -9,7 +9,7 @@ COMMENT ON COLUMN pais.nompais IS 'Nome do pais';
 
 -- Tabela tipo de envolvimento
 CREATE TABLE tipo_envolvimento (
-    tipenv VARCHAR(255) NOT NULL,
+    tipenv VARCHAR(80) NOT NULL,
     desctipenv TEXT NOT NULL,
     PRIMARY KEY (tipenv)
 );
@@ -18,7 +18,7 @@ COMMENT ON COLUMN tipo_envolvimento.desctipenv IS 'Descrição do tipo do envolv
 
 CREATE TABLE tipo_ocorrencia (
     idtipoco SERIAL NOT NULL,
-    desctipoco VARCHAR(255) NOT NULL,
+    desctipoco text NOT NULL,
     PRIMARY KEY (idtipoco)
 );
 COMMENT ON COLUMN tipo_ocorrencia.idtipoco IS 'Codigo do tipo de ocorrencia';
@@ -26,7 +26,7 @@ COMMENT ON COLUMN tipo_ocorrencia.desctipoco IS 'Descricao do acontecimento';
 
 CREATE TABLE tipo_violencia (
     idtipvio VARCHAR(40) NOT NULL,
-    desctipvio VARCHAR(255),
+    desctipvio text,
     PRIMARY KEY (idtipvio)
 );
 COMMENT ON TABLE tipo_violencia IS 'Tabela dos tipos de violencia';
@@ -74,10 +74,10 @@ COMMENT ON COLUMN bairro.nombai IS 'Nome do bairro';
 
 CREATE TABLE departamento_policial (
     iddep SERIAL NOT NULL,
-    disdep VARCHAR(255) NOT NULL,
+    disdep VARCHAR(80) NOT NULL,
     emaildep VARCHAR(40) NOT NULL,
     telatedep NUMERIC(14, 0) NOT NULL,
-    logrdp INT4 NOT NULL,
+    logrdp Varchar(255) NOT NULL,
     numdp INT4 NOT NULL,
     bairroidbai INT4 NOT NULL,
     cidadeidcid INT4 NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE pessoa (
     estcivpes VARCHAR(40) NOT NULL,
     datnaspes DATE NOT NULL CHECK (datnaspes <= CURRENT_DATE),
     numtelpes NUMERIC(14, 0) NOT NULL CHECK (numtelpes > 0),
-    emailpes VARCHAR(255) NOT NULL CHECK (emailpes LIKE '%@%'),
+    emailpes VARCHAR(80) NOT NULL CHECK (emailpes LIKE '%@%'),
     genpes VARCHAR(15) NOT NULL CHECK (genpes IN ('Masculino', 'Feminino', 'Outro')),
     usuarioidusu INT4 NOT NULL,
     Fotpes BYTEA,
@@ -117,7 +117,7 @@ COMMENT ON COLUMN pessoa.Fotpes IS 'Foto da Pessoa';
 
 CREATE TABLE funcionario (
     pessoaidpes INT4 NOT NULL,
-    carfun VARCHAR(255) NOT NULL,
+    carfun VARCHAR(80) NOT NULL,
     departamento_policiaiddep INT4 NOT NULL,
     PRIMARY KEY (pessoaidpes),
     FOREIGN KEY (pessoaidpes) REFERENCES pessoa (idpes),
@@ -127,7 +127,7 @@ COMMENT ON COLUMN funcionario.carfun IS 'Cargo do funcionario';
 
 CREATE TABLE endereco_pessoa (
     idendpes SERIAL NOT NULL,
-    logrpes VARCHAR(80) NOT NULL,
+    logrpes VARCHAR(255) NOT NULL,
     numendpes INT4 NOT NULL,
     comendpes VARCHAR(255),
     bairroidbai INT4 NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE ocorrencia (
     descoco TEXT,
     datoco TIMESTAMP,
     lococo VARCHAR(255) NOT NULL,
-    staoco INT4 NOT NULL,
+    staoco Varchar(40) NOT NULL,
     cidadeidcid INT4 NOT NULL,
     funcionariopessoaidpes INT4 NOT NULL,
     tipo_violenciaidtipooco VARCHAR(40) NOT NULL,
@@ -168,7 +168,7 @@ COMMENT ON COLUMN ocorrencia.staoco IS 'Status da ocorrencia';
 CREATE TABLE pessoa_envolvida (
     idpesenv SERIAL NOT NULL,
     nompesenv VARCHAR(80),
-    descpesenv VARCHAR(255),
+    descpesenv text,
     cpfenv VARCHAR(11),
     telenv NUMERIC(14, 0) CHECK (telenv > 0),
     datnasenv DATE CHECK (datnasenv <= CURRENT_DATE),
