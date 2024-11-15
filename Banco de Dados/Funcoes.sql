@@ -35,4 +35,26 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+---------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION listar_ocorrencias_validadas()
+RETURNS TABLE(idoco INT, descricao TEXT, data TIMESTAMP, local VARCHAR(255), status VARCHAR(40)) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT idoco, descoco, datoco, lococo, staoco
+    FROM ocorrencia
+    WHERE validaoco = TRUE;
+END;
+$$ LANGUAGE plpgsql;
+------------------------------------------------------------
+CREATE OR REPLACE FUNCTION consultar_historico_ocorrencias(_cpf VARCHAR(11))
+RETURNS TABLE(idoco INT, descricao TEXT, data TIMESTAMP, local VARCHAR(255), status VARCHAR(40)) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT o.idoco, o.descoco, o.datoco, o.lococo, o.staoco
+    FROM ocorrencia o
+    JOIN pessoa_envolvida pe ON o.idoco = pe.ocorrenciaidoco
+    WHERE pe.cpfenv = _cpf;
+END;
+$$ LANGUAGE plpgsql;
 

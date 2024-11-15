@@ -33,9 +33,11 @@ COMMENT ON TABLE tipo_violencia IS 'Tabela dos tipos de violencia';
 COMMENT ON COLUMN tipo_violencia.desctipvio IS 'descrição da violencia';
 
 CREATE TABLE usuario (
-    idusu SERIAL NOT NULL,
-    cpfusu VARCHAR(13) NOT NULL UNIQUE,
-    senusu VARCHAR(30) NOT NULL,
+    idusu SERIAL NOT NULL,                  
+    cpfusu VARCHAR(13) UNIQUE,              
+    senusu VARCHAR(30),                     
+    senhafun VARCHAR(30),                  
+    matfun VARCHAR(10) UNIQUE,              
     PRIMARY KEY (idusu)
 );
 COMMENT ON COLUMN usuario.cpfusu IS 'cpf do Usuario';
@@ -152,6 +154,7 @@ CREATE TABLE ocorrencia (
     funcionariopessoaidpes INT4 NOT NULL,
     tipo_violenciaidtipooco VARCHAR(40) NOT NULL,
     tipo_ocorrenciaidtipoco INT4 NOT NULL,
+    validaoco BOOLEAN DEFAULT FALSE,
     PRIMARY KEY (idoco),
     FOREIGN KEY (cidadeidcid) REFERENCES cidade (idcid),
     FOREIGN KEY (funcionariopessoaidpes) REFERENCES funcionario (pessoaidpes),
