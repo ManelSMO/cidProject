@@ -66,7 +66,8 @@ O sistema visa agilizar o processo de comunicação com as autoridades e garanti
         - 📃 Entrevista com Eduardo Vargas
     - 📁 Imagens
     - 📁 Artigo
-        - 📃 Artigo
+        - 📃 Artigo Banco I 2024/1 - antigo
+        - 📃 Artigo Final
 - 📃 README (Este arquivo que você está observando neste momento)
 #
 
