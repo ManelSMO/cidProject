@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -12,13 +15,15 @@ public class Bairro{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idbai", nullable = false)
+
     protected long idBairro;
 
     @Column(name = "nombai", nullable = false)
-    protected String nomeBairro;
+    private String nomeBairro;
 
-    @ManyToOne
-    protected EnderecoPessoa enderecoPessoa;
+    @OneToMany(mappedBy = "bairro", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EnderecoPessoa> enderecoPessoa = new HashSet<>();
 
+    @OneToOne(mappedBy = "bairro")
+    private DepartamentoPolicial departamentoPolicial;
 }

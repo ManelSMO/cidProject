@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -39,4 +41,10 @@ public class Pessoa {
 
     @OneToOne
     protected Usuario usuario;
+
+    @OneToOne
+    protected Funcionario funcionario;
+
+    @OneToMany(mappedBy = "EnderecoPessoa")
+    protected Set<EnderecoPessoa> enderecoPessoas;
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -16,4 +18,7 @@ public class TipoViolencia {
 
     @Column(name = "desctipvio")
     protected String descTipoViolencia;
+
+    @OneToMany(mappedBy = "Ocorrencia")
+    protected Set<Ocorrencia> ocorrencia;
 }

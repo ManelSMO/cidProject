@@ -28,4 +28,11 @@ public class PessoaEnvolvida {
 
     @Column(name = "datnasenv")
     protected String dataNascPessoaEnvolvida;
+
+    @ManyToOne
+    protected Ocorrencia ocorrencia;
+
+    @OneToOne
+    protected TipoEnvolvimento tipoEnvolvimento;
+
 }

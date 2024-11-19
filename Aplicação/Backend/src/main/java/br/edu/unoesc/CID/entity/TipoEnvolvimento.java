@@ -19,4 +19,8 @@ public class TipoEnvolvimento {
 
     @Column(name = "desctipenv", nullable = false)
     protected String descTipoEnvolvimento;
+
+    @OneToOne
+    protected PessoaEnvolvida pessoaEnvolvimento;
+
 }

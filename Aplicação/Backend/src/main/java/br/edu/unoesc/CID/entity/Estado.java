@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.lang.ref.Reference;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Getter
@@ -24,6 +26,10 @@ public class Estado {
     protected String nomeEstado;
 
     @ManyToOne
-    protected Cidade cidade;
+    @JoinColumn(name = "idpais")
+    private Pais pais;
+
+    @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Cidade> cidades = new HashSet<>();
 
 }

@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -17,6 +20,13 @@ public class Funcionario{
     @Column(name = "carfun",nullable = false)
     protected String cargoFuncionario;
 
-    @OneToOne
-    protected Pessoa pessoa;
+    @OneToOne(mappedBy = "funcionario")
+    private Pessoa pessoa;
+
+    @ManyToOne
+    @JoinColumn(name = "iddep")
+    private DepartamentoPolicial departamentoPolicial;
+
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ocorrencia> ocorrencias = new HashSet<>();
 }

@@ -27,4 +27,8 @@ public class Anexos {
 
     @Column(name = "datanexo", nullable = false)
     protected Timestamp dataAnexo;
+
+    @ManyToOne
+    @JoinColumn(name = "ocorrenciaidoco")
+    private Ocorrencia ocorrencia;
 }

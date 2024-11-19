@@ -25,6 +25,11 @@ public class EnderecoPessoa {
     protected String complementoPessoa;
 
     @ManyToOne
+    protected Bairro bairro;
+
+    @ManyToOne
     protected Cidade cidade;
 
+    @ManyToOne
+    protected Pessoa pessoa;
 }
