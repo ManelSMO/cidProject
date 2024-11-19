@@ -1,11 +1,12 @@
 // src/pages/index.tsx
 import { useState } from 'react';
 import Home from '../components/Home';
-import LoginCidadao from '../components/LoginCidadao';
-import LoginPolicial from '../components/LoginPolicial';
-import CadastroCidadao from '../components/CadastroCidadao';
-import CadastroPolicial from '../components/CadastroPolicial';
-import Menu from '../components/Menu'; // Importe o novo componente Menu
+import LoginCidadao from '../components/Login/LoginCidadao';
+import LoginPolicial from '../components/Login/LoginPolicial';
+import CadastroCidadao from '../components/Cadastros/CadastroCidadao';
+import CadastroPolicial from '../components/Cadastros/CadastroPolicial';
+import Menu from '../components/Menu';
+import Registro from '../components/BO/Registro'; // Importando o componente Registro
 
 const Index: React.FC = () => {
   // Estado para controlar qual página exibir
@@ -47,11 +48,14 @@ const Index: React.FC = () => {
       {activePage === 'menu' && (
         <Menu onRegisterClick={showRegistrarBoletim} onConsultClick={showConsultarBoletins} />
       )}
-      {activePage === 'registrarBoletim' && <div>Registrar Boletim de Ocorrência (Placeholder)</div>}
-      {activePage === 'consultarBoletins' && <div>Consultar Meus Boletins de Ocorrência (Placeholder)</div>}
+      {activePage === 'registrarBoletim' && (
+        <Registro onHomeClick={() => setActivePage('menu')} />
+      )}
+      {activePage === 'consultarBoletins' && (
+        <div>Consultar Meus Boletins de Ocorrência (Placeholder)</div> /* Placeholder para futura tela */
+      )}
     </>
   );
 };
 
 export default Index;
-

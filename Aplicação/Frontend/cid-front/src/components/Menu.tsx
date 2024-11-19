@@ -1,4 +1,4 @@
-import styles from './Menu.module.css';
+import styles from '../components/Menu.module.css';
 import { useRouter } from 'next/router';
 
 interface MenuProps {
