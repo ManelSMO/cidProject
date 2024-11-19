@@ -95,3 +95,58 @@ GROUP BY
     t.desctipoco, c.nomcid
 ORDER BY
     total_ocorrencias DESC;
+-------------------------------------------------------------------------------------------------
+   
+   
+   
+ ------views grupo cidadao  
+   ---------------------------------------------------------------------------
+   CREATE OR REPLACE VIEW minhas_ocorrencias AS
+SELECT 
+    o.idoco,
+    o.descoco,
+    o.datoco,
+    o.lococo,
+    o.staoco,
+    c.nomcid AS cidade,
+    tv.desctipvio AS tipo_violencia,
+    toco.desctipoco AS tipo_ocorrencia
+FROM ocorrencia o
+JOIN cidade c ON o.cidadeidcid = c.idcid
+JOIN tipo_violencia tv ON o.tipo_violenciaidtipooco = tv.idtipvio
+JOIN tipo_ocorrencia toco ON o.tipo_ocorrenciaidtipoco = toco.idtipoco
+WHERE o.funcionariopessoaidpes IS NULL;
+
+GRANT SELECT ON minhas_ocorrencias TO grupo_cidadao;
+-------------------------------------------------------------------
+CREATE OR REPLACE VIEW resumo_ocorrencias_status AS
+SELECT 
+    c.nomcid AS cidade,
+    o.staoco AS status,
+    COUNT(*) AS total
+FROM ocorrencia o
+JOIN cidade c ON o.cidadeidcid = c.idcid
+WHERE o.funcionariopessoaidpes IS NULL
+GROUP BY c.nomcid, o.staoco;
+
+GRANT SELECT ON resumo_ocorrencias_status TO grupo_cidadao;
+--------------------------------------------------------
+
+----VIEWS do grupo policial
+-----------------------------------
+CREATE VIEW ocorrencias_responsavel AS
+SELECT o.idoco, o.descoco, o.datoco, o.staoco, o.lococo, o.validaoco
+FROM ocorrencia o
+WHERE o.funcionariopessoaidpes = SESSION_USER::INT;
+
+-- Garantindo acesso ao grupo policia
+GRANT SELECT ON ocorrencias_responsavel TO grupo_policia;
+
+
+CREATE VIEW todas_ocorrencias AS
+SELECT o.idoco, o.descoco, o.datoco, o.staoco, o.lococo, o.validaoco, p.nompes AS responsavel
+FROM ocorrencia o
+LEFT JOIN pessoa p ON o.funcionariopessoaidpes = p.idpes;
+
+-- Garantindo acesso ao grupo policia
+GRANT SELECT ON todas_ocorrencias TO grupo_policia;

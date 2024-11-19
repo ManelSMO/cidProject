@@ -18,6 +18,25 @@ FOR EACH ROW
 EXECUTE FUNCTION set_data_ocorrencia();
 
 ------------------------------------------------------------
+CREATE OR REPLACE FUNCTION auditoria_ocorrencias_trigger()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF TG_OP = 'UPDATE' THEN
+        INSERT INTO auditoria_ocorrencia (idpolicial, idocorrencia, acao, descricao_acao)
+        VALUES (NEW.funcionariopessoaidpes, NEW.idoco, 'Atualizar', 'Ocorrência atualizada');
+    ELSIF TG_OP = 'DELETE' THEN
+        INSERT INTO auditoria_ocorrencia (idpolicial, idocorrencia, acao, descricao_acao)
+        VALUES (OLD.funcionariopessoaidpes, OLD.idoco, 'Excluir', 'Ocorrência excluída');
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_auditoria_ocorrencias
+AFTER UPDATE OR DELETE ON ocorrencia
+FOR EACH ROW
+EXECUTE FUNCTION auditoria_ocorrencias_trigger();
+---------------------------------------------------------------
 
 
 -- procedures
