@@ -3,6 +3,38 @@ CREATE ROLE grupo_cidadao;
 CREATE ROLE grupo_policia;
 create role grupo_admin;
 
+
+---------- Trigger dos Grupos -----------------
+-- Trigger que atribui automaticamente um usuario a uma role, dependendo do tipo de usuario que ele é
+
+CREATE OR REPLACE FUNCTION atribuir_role_ao_usuario()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Verifica o tipo de usuário e atribui a role correspondente
+    IF NEW.tipo_usu = 'Cidadão' THEN
+        EXECUTE format('GRANT grupo_cidadao TO %I', NEW.idusu);
+    ELSIF NEW.tipo_usu = 'Policia' THEN
+        EXECUTE format('GRANT grupo_policia TO %I', NEW.idusu);
+    ELSIF NEW.tipo_usu = 'Admin' THEN
+        EXECUTE format('GRANT grupo_admin TO %I', NEW.idusu);
+    ELSE
+        -- Caso não corresponda a nenhum tipo, não atribui role
+        RAISE NOTICE 'Usuário % não recebeu nenhuma role específica.', NEW.idusu;
+    END IF;
+
+    -- Retorna o novo registro de usuário para que ele seja inserido normalmente
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_atribuir_role_ao_usuario
+AFTER INSERT ON public.usuario
+FOR EACH ROW
+EXECUTE FUNCTION atribuir_role_ao_usuario();
+
+
+
+
 ----------Garantindo os acessos do grupo de adsministradores
 -- Tabelas
 GRANT ALL ON ALL TABLES IN SCHEMA public TO grupo_admin;
