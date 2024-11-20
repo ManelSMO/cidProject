@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './Registro.module.css';
 import { useRouter } from 'next/router';
+import jsPDF from 'jspdf';
 
 interface RegistroProps {
   onHomeClick: () => void;
@@ -51,22 +52,42 @@ const RegistrarOcorrencia: React.FC<RegistroProps> = ({ onHomeClick }) => {
     setParticipacao("");
   };
 
+  const gerarPDF = () => {
+    const doc = new jsPDF();
+
+    doc.setFont('helvetica', 'bold');
+    doc.text('Boletim de Ocorrência', 10, 10);
+    doc.setFont('helvetica', 'normal');
+
+    doc.text(`Tipo de Ocorrência: ${tipoOcorrencia}`, 10, 20);
+    doc.text(`Houve Violência: ${houveViolencia ? 'Sim' : 'Não'}`, 10, 30);
+    if (houveViolencia) {
+      doc.text(`Tipo de Violência: ${tipoViolencia}`, 10, 40);
+    }
+    doc.text(`Data: ${dataOcorrencia} Hora: ${horaOcorrencia}`, 10, 50);
+    doc.text(`Cidade: ${cidade}`, 10, 60);
+    doc.text(`Tipo de Local: ${tipoLocal}`, 10, 70);
+    doc.text(`Descrição da Ocorrência: ${descricaoOcorrencia}`, 10, 80);
+
+    if (nomeEnvolvido) {
+      doc.text('Envolvidos:', 10, 100);
+      doc.text(`- Nome: ${nomeEnvolvido}`, 10, 110);
+      doc.text(`- CPF: ${cpfEnvolvido}`, 10, 120);
+      doc.text(`- Data de Nascimento: ${nascimentoEnvolvido}`, 10, 130);
+      doc.text(`- Telefone: ${telefone}`, 10, 140);
+      doc.text(`- Email: ${email}`, 10, 150);
+      doc.text(`- Participação: ${participacao}`, 10, 160);
+    }
+
+    doc.save('Boletim_de_Ocorrencia.pdf');
+  };
+
+  const [showModal, setShowModal] = useState(false);
+
   const handleRegistrarOcorrencia = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Ocorrência registrada:', {
-      tipoOcorrencia,
-      houveViolencia,
-      tipoViolencia, // Incluído no registro
-      dataOcorrencia,
-      horaOcorrencia,
-      cidade,
-      tipoLocal,
-      descricaoOcorrencia,
-      telefone,
-      email,
-      anexo,
-    });
-    router.push('/confirmacao');
+    // Mensagem de confirmação
+    setShowModal(true);
   };
 
   return (
@@ -80,6 +101,25 @@ const RegistrarOcorrencia: React.FC<RegistroProps> = ({ onHomeClick }) => {
           onClick={onHomeClick}
         />
       </div>
+      {/* Modal de confirmação */}
+      {showModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h2>Sucesso!</h2>
+            <p>Ocorrência registrada com sucesso! O PDF foi gerado.</p>
+            <button
+              onClick={() => {
+                setShowModal(false); // Fecha o modal
+                gerarPDF();
+                onHomeClick(); // Redireciona para o menu
+              }}
+              className={styles.button}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
       <form className={styles.form} onSubmit={handleRegistrarOcorrencia}>
         <div className={styles.section}>
           <label>
@@ -265,7 +305,7 @@ const RegistrarOcorrencia: React.FC<RegistroProps> = ({ onHomeClick }) => {
           </label>
         </div>
         <div className={styles.section}>
-        <label>
+          <label>
             Data de Nascimento:
             <input
               type="date"
@@ -275,7 +315,7 @@ const RegistrarOcorrencia: React.FC<RegistroProps> = ({ onHomeClick }) => {
               className={styles.field}
             />
           </label>
-        <label>
+          <label>
             Telefone:
             <input
               type="text"
@@ -316,8 +356,8 @@ const RegistrarOcorrencia: React.FC<RegistroProps> = ({ onHomeClick }) => {
             />
           </label>
           <button type="submit" className={styles.button}>
-          Registrar
-        </button>
+            Registrar
+          </button>
         </div>
       </form>
     </div>
