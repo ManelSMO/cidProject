@@ -1,3 +1,15 @@
+CREATE TABLE public.auditoria (
+    id SERIAL PRIMARY KEY,
+    tabela_alterada VARCHAR(100), 
+    operacao VARCHAR(10),
+    registro_id TEXT,
+    usuario_responsavel VARCHAR(100), 
+    dados_anteriores JSONB,
+    dados_novos JSONB,
+    data_hora TIMESTAMP
+);
+
+
 CREATE OR REPLACE FUNCTION registrar_auditoria()
 RETURNS TRIGGER AS $$
 DECLARE
