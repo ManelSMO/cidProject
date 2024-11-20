@@ -15,6 +15,8 @@ JOIN funcionario f ON o.funcionariopessoaidpes = f.pessoaidpes
 JOIN pessoa p ON f.pessoaidpes = p.idpes;
 -----------------
 
+
+
 -- 1. Pessoas com idades entre 20 e 30 anos e do sexo feminino, ordenadas pelo nome em ordem descendente.
 CREATE VIEW vw_pessoas_20_30_feminino AS
 SELECT
@@ -118,6 +120,8 @@ JOIN tipo_ocorrencia toco ON o.tipo_ocorrenciaidtipoco = toco.idtipoco
 WHERE o.funcionariopessoaidpes IS NULL;
 
 GRANT SELECT ON minhas_ocorrencias TO grupo_cidadao;
+
+
 -------------------------------------------------------------------
 CREATE OR REPLACE VIEW resumo_ocorrencias_status AS
 SELECT 
@@ -147,6 +151,9 @@ CREATE VIEW todas_ocorrencias AS
 SELECT o.idoco, o.descoco, o.datoco, o.staoco, o.lococo, o.validaoco, p.nompes AS responsavel
 FROM ocorrencia o
 LEFT JOIN pessoa p ON o.funcionariopessoaidpes = p.idpes;
+
+
+
 
 -- Garantindo acesso ao grupo policia
 GRANT SELECT ON todas_ocorrencias TO grupo_policia;

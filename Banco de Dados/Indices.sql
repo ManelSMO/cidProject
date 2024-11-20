@@ -43,5 +43,4 @@ CREATE INDEX idx_pessoa_telefone ON pessoa (numtelpes);
 CREATE INDEX idx_pessoa_envolvida_ocorrencia ON pessoa_envolvida (ocorrenciaidoco);
 CREATE INDEX idx_pessoa_envolvida_tipo_envolvimento ON pessoa_envolvida (tipo_envolvimentotipenv);
 
--- Índices para a tabela `usuario`
-CREATE INDEX idx_usuario_cpf ON usuario (cpfusu);
+

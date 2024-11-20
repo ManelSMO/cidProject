@@ -16,33 +16,64 @@ CREATE TABLE tipo_envolvimento (
 COMMENT ON COLUMN tipo_envolvimento.tipenv IS 'Tipo do envolvimento';
 COMMENT ON COLUMN tipo_envolvimento.desctipenv IS 'Descrição do tipo do envolvimento';
 
+-- Tabela tipo de ocorrência
 CREATE TABLE tipo_ocorrencia (
     idtipoco SERIAL NOT NULL,
-    desctipoco text NOT NULL,
+    desctipoco TEXT NOT NULL,
     PRIMARY KEY (idtipoco)
 );
-COMMENT ON COLUMN tipo_ocorrencia.idtipoco IS 'Codigo do tipo de ocorrencia';
-COMMENT ON COLUMN tipo_ocorrencia.desctipoco IS 'Descricao do acontecimento';
+COMMENT ON COLUMN tipo_ocorrencia.idtipoco IS 'Código do tipo de ocorrência';
+COMMENT ON COLUMN tipo_ocorrencia.desctipoco IS 'Descrição do acontecimento';
 
+-- Tabela tipo de violência
 CREATE TABLE tipo_violencia (
     idtipvio VARCHAR(40) NOT NULL,
-    desctipvio text,
+    desctipvio TEXT,
     PRIMARY KEY (idtipvio)
 );
-COMMENT ON TABLE tipo_violencia IS 'Tabela dos tipos de violencia';
-COMMENT ON COLUMN tipo_violencia.desctipvio IS 'descrição da violencia';
+COMMENT ON TABLE tipo_violencia IS 'Tabela dos tipos de violência';
+COMMENT ON COLUMN tipo_violencia.desctipvio IS 'Descrição da violência';
 
+-- Tabela principal de usuários
 CREATE TABLE usuario (
-    idusu SERIAL NOT NULL,                  
-    cpfusu VARCHAR(13) UNIQUE,              
-    senusu VARCHAR(30),                     
-    senhafun VARCHAR(30),                  
-    matfun VARCHAR(10) UNIQUE,              
-    PRIMARY KEY (idusu)
+    idusu SERIAL PRIMARY KEY,
+    tipo_usu VARCHAR(20) NOT NULL CHECK (tipo_usu IN ('Cidadão', 'Policial')),
+    status BOOLEAN DEFAULT TRUE, -- Indica se o usuário está ativo
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    atualizado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-COMMENT ON COLUMN usuario.cpfusu IS 'cpf do Usuario';
-COMMENT ON COLUMN usuario.senusu IS 'Senha do usuario';
+COMMENT ON TABLE usuario IS 'Tabela principal de usuários';
+COMMENT ON COLUMN usuario.tipo_usu IS 'Tipo do usuário (Cidadao ou Policial)';
+COMMENT ON COLUMN usuario.status IS 'Status do usuário (ativo ou inativo)';
 
+
+-- Tabela de acesso para cidadãos
+CREATE TABLE acesso_cidadao (
+    idacessoc SERIAL PRIMARY KEY,
+    usuarioidusu INT NOT NULL UNIQUE,
+    cpfusu VARCHAR(14) NOT NULL UNIQUE, -- CPF formatado
+    senusu VARCHAR(255) NOT NULL,       -- Senha do cidadão
+    FOREIGN KEY (usuarioidusu) REFERENCES usuario (idusu) ON DELETE CASCADE
+);
+COMMENT ON TABLE acesso_cidadao IS 'Tabela de credenciais de acesso para cidadãos';
+COMMENT ON COLUMN acesso_cidadao.cpfusu IS 'CPF do cidadão';
+COMMENT ON COLUMN acesso_cidadao.senusu IS 'Senha do cidadão';
+
+-- Tabela de acesso para policiais
+CREATE TABLE acesso_policial (
+    idacessop SERIAL PRIMARY KEY,
+    usuarioidusu INT NOT NULL UNIQUE,
+    matfun VARCHAR(10) NOT NULL UNIQUE, -- Matrícula do policial
+    senhafun VARCHAR(255) NOT NULL,     -- Senha do policial
+    FOREIGN KEY (usuarioidusu) REFERENCES usuario (idusu) ON DELETE CASCADE
+);
+COMMENT ON TABLE acesso_policial IS 'Tabela de credenciais de acesso para policiais';
+COMMENT ON COLUMN acesso_policial.matfun IS 'Matrícula do policial';
+COMMENT ON COLUMN acesso_policial.senhafun IS 'Senha do policial';
+
+
+
+-- Tabela estado
 CREATE TABLE estado (
     idest SERIAL NOT NULL,
     siglaest CHAR(2) NOT NULL,
@@ -52,8 +83,9 @@ CREATE TABLE estado (
     FOREIGN KEY (paisidpais) REFERENCES pais (idpais)
 );
 COMMENT ON COLUMN estado.siglaest IS 'Sigla do estado';
-COMMENT ON COLUMN estado.nomest IS 'Nome do Estado';
+COMMENT ON COLUMN estado.nomest IS 'Nome do estado';
 
+-- Tabela cidade
 CREATE TABLE cidade (
     idcid SERIAL NOT NULL,
     nomcid VARCHAR(80) NOT NULL,
@@ -64,6 +96,7 @@ CREATE TABLE cidade (
 COMMENT ON TABLE cidade IS 'Tabela de cidades';
 COMMENT ON COLUMN cidade.nomcid IS 'Nome da cidade';
 
+-- Tabela bairro
 CREATE TABLE bairro (
     idbai SERIAL NOT NULL,
     nombai VARCHAR(80) NOT NULL,
@@ -71,15 +104,16 @@ CREATE TABLE bairro (
     PRIMARY KEY (idbai),
     FOREIGN KEY (estadoidest) REFERENCES estado (idest)
 );
-COMMENT ON TABLE bairro IS 'Tabela de Bairros';
+COMMENT ON TABLE bairro IS 'Tabela de bairros';
 COMMENT ON COLUMN bairro.nombai IS 'Nome do bairro';
 
+-- Tabela departamento policial
 CREATE TABLE departamento_policial (
     iddep SERIAL NOT NULL,
     disdep VARCHAR(80) NOT NULL,
     emaildep VARCHAR(40) NOT NULL,
     telatedep NUMERIC(14, 0) NOT NULL,
-    logrdp Varchar(255) NOT NULL,
+    logrdp VARCHAR(255) NOT NULL,
     numdp INT4 NOT NULL,
     bairroidbai INT4 NOT NULL,
     cidadeidcid INT4 NOT NULL,
@@ -87,13 +121,10 @@ CREATE TABLE departamento_policial (
     FOREIGN KEY (bairroidbai) REFERENCES bairro (idbai) ON DELETE CASCADE,
     FOREIGN KEY (cidadeidcid) REFERENCES cidade (idcid) ON DELETE CASCADE
 );
-COMMENT ON COLUMN departamento_policial.iddep IS 'Código do departamento de policia';
-COMMENT ON COLUMN departamento_policial.disdep IS 'Distrito do DP';
-COMMENT ON COLUMN departamento_policial.emaildep IS 'Email da Dp';
-COMMENT ON COLUMN departamento_policial.telatedep IS 'Telefone de atendimento da Dp';
-COMMENT ON COLUMN departamento_policial.logrdp IS 'Logradouro do departamento';
-COMMENT ON COLUMN departamento_policial.numdp IS 'Numero da residencia do departamento';
+COMMENT ON COLUMN departamento_policial.disdep IS 'Distrito do departamento policial';
+COMMENT ON COLUMN departamento_policial.emaildep IS 'Email do departamento policial';
 
+-- Tabela pessoa
 CREATE TABLE pessoa (
     idpes SERIAL NOT NULL,
     nompes VARCHAR(80) NOT NULL,
@@ -104,19 +135,16 @@ CREATE TABLE pessoa (
     genpes VARCHAR(15) NOT NULL CHECK (genpes IN ('Masculino', 'Feminino', 'Outro')),
     usuarioidusu INT4 NOT NULL,
     Fotpes BYTEA,
+    acesso_cidadao int4,
+    acesso_policial int4,
     PRIMARY KEY (idpes),
-    FOREIGN KEY (usuarioidusu) REFERENCES usuario (idusu)
+    FOREIGN KEY (acesso_cidadao) REFERENCES acesso_cidadao (idacessoc),
+    FOREIGN KEY (acesso_policial) REFERENCES acesso_policial (idacessop)
+    
 );
-COMMENT ON TABLE pessoa IS 'Tabela de pessoas para registrar o BO';
-COMMENT ON COLUMN pessoa.idpes IS 'Codigo Pessoa';
-COMMENT ON COLUMN pessoa.nompes IS 'Nome da pessoa';
-COMMENT ON COLUMN pessoa.estcivpes IS 'Estado civil da Pessoa';
-COMMENT ON COLUMN pessoa.datnaspes IS 'Data de nascimento da pessoa';
-COMMENT ON COLUMN pessoa.numtelpes IS 'numero de telefone da pessoa';
-COMMENT ON COLUMN pessoa.emailpes IS 'E-mail da pessoa';
-COMMENT ON COLUMN pessoa.genpes IS 'Genêro da pessoa';
-COMMENT ON COLUMN pessoa.Fotpes IS 'Foto da Pessoa';
+COMMENT ON TABLE pessoa IS 'Tabela de pessoas para registro';
 
+-- Tabela funcionário
 CREATE TABLE funcionario (
     pessoaidpes INT4 NOT NULL,
     carfun VARCHAR(80) NOT NULL,
@@ -125,7 +153,7 @@ CREATE TABLE funcionario (
     FOREIGN KEY (pessoaidpes) REFERENCES pessoa (idpes),
     FOREIGN KEY (departamento_policiaiddep) REFERENCES departamento_policial (iddep)
 );
-COMMENT ON COLUMN funcionario.carfun IS 'Cargo do funcionario';
+COMMENT ON COLUMN funcionario.carfun IS 'Cargo do funcionário';
 
 CREATE TABLE endereco_pessoa (
     idendpes SERIAL NOT NULL,
@@ -204,3 +232,4 @@ COMMENT ON COLUMN anexo.camane IS 'Caminho do arquivo anexado';
 COMMENT ON COLUMN anexo.tipoanexo IS 'Tipo do anexo (video, imagem, documento...)';
 COMMENT ON COLUMN anexo.descanexo IS 'Descrição do anexo';
 COMMENT ON COLUMN anexo.datanexo IS 'Data que o anexo foi carregado';
+

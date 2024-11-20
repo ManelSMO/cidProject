@@ -16,26 +16,70 @@ CREATE TRIGGER trg_set_data_ocorrencia
 BEFORE INSERT ON ocorrencia
 FOR EACH ROW
 EXECUTE FUNCTION set_data_ocorrencia();
+-------------------------------
 
-------------------------------------------------------------
-CREATE OR REPLACE FUNCTION auditoria_ocorrencias_trigger()
+-- Trigger para atualizar o timestamp de atualizado_em automaticamente
+CREATE OR REPLACE FUNCTION atualizar_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF TG_OP = 'UPDATE' THEN
-        INSERT INTO auditoria_ocorrencia (idpolicial, idocorrencia, acao, descricao_acao)
-        VALUES (NEW.funcionariopessoaidpes, NEW.idoco, 'Atualizar', 'Ocorrência atualizada');
-    ELSIF TG_OP = 'DELETE' THEN
-        INSERT INTO auditoria_ocorrencia (idpolicial, idocorrencia, acao, descricao_acao)
-        VALUES (OLD.funcionariopessoaidpes, OLD.idoco, 'Excluir', 'Ocorrência excluída');
+    NEW.atualizado_em = CURRENT_TIMESTAMP;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_atualizar_usuario
+BEFORE UPDATE ON usuario
+FOR EACH ROW EXECUTE FUNCTION atualizar_timestamp();
+
+-------------------------------
+-- Validação de tipo no login de usuário (Trigger)
+CREATE OR REPLACE FUNCTION validar_tipo_usuario_login()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_TABLE_NAME = 'acesso_cidadao' AND EXISTS (
+        SELECT 1 
+        FROM acesso_policial 
+        WHERE usuarioidusu = NEW.usuarioidusu)) THEN
+        RAISE EXCEPTION 'O mesmo usuário não pode estar em acesso_cidadao e acesso_policial.';
     END IF;
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trigger_auditoria_ocorrencias
-AFTER UPDATE OR DELETE ON ocorrencia
-FOR EACH ROW
-EXECUTE FUNCTION auditoria_ocorrencias_trigger();
+CREATE TRIGGER trigger_validar_cidadao
+BEFORE INSERT OR UPDATE ON acesso_cidadao
+FOR EACH ROW EXECUTE FUNCTION validar_tipo_usuario_login();
+
+CREATE TRIGGER trigger_validar_policial
+BEFORE INSERT OR UPDATE ON acesso_policial
+FOR EACH ROW EXECUTE FUNCTION validar_tipo_usuario_login();
+-----------------
+
+CREATE OR REPLACE FUNCTION validar_tipo_usuario()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (TG_TABLE_NAME = 'acesso_cidadao' AND 
+        (SELECT tipo_usu FROM usuario WHERE idusu = NEW.usuarioidusu) != 'Cidadão') THEN
+        RAISE EXCEPTION 'Usuário não é do tipo Cidadão';
+    ELSIF (TG_TABLE_NAME = 'acesso_policial' AND 
+           (SELECT tipo_usu FROM usuario WHERE idusu = NEW.usuarioidusu) != 'Policial') THEN
+        RAISE EXCEPTION 'Usuário não é do tipo Policial';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Associar o trigger às tabelas de acesso
+CREATE TRIGGER trigger_validar_acesso_cidadao
+BEFORE INSERT OR UPDATE ON acesso_cidadao
+FOR EACH ROW EXECUTE FUNCTION validar_tipo_usuario();
+
+CREATE TRIGGER trigger_validar_acesso_policial
+BEFORE INSERT OR UPDATE ON acesso_policial
+FOR EACH ROW EXECUTE FUNCTION validar_tipo_usuario();
+
+------------------------------------------------------------
+
 ---------------------------------------------------------------
 
 

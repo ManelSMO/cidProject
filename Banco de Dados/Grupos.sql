@@ -5,26 +5,23 @@ create role grupo_admin;
 
 ----------Garantindo os acessos do grupo de adsministradores
 -- Tabelas
-GRANT ALL ON ALL TABLES IN SCHEMA public TO grupo_admins;
-
--- Views
-GRANT ALL ON ALL VIEWS IN SCHEMA public TO grupo_admins;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO grupo_admin;
 
 -- Sequências
-GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO grupo_admins;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO grupo_admin;
 
 -- Funções
-GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO grupo_admins;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO grupo_admin;
 
 -- Configurar permissões automáticas para novos objetos
 -- Novas tabelas
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO grupo_admins;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO grupo_admin;
 
 -- Novas sequências
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO grupo_admins;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO grupo_admin;
 
 -- Novas funções
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO grupo_admins;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO grupo_admin;
 
 
 ---------------Funçoes da tabela GRUPO_POLICIAL---------------------------------------------
@@ -121,4 +118,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-GRANT EXECUTE ON FUNCTION criar_bo TO grupo_cidadao;s
+GRANT EXECUTE ON FUNCTION criar_bo TO grupo_cidadao;
