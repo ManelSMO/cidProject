@@ -1,23 +1,3 @@
--- Criação da tabela de auditoria
-CREATE TABLE public.auditoria (
-    id SERIAL PRIMARY KEY,
-    tabela_alterada VARCHAR(100) NOT NULL, -- Nome da tabela
-    operacao VARCHAR(10) NOT NULL,        -- Tipo de operação (INSERT, UPDATE, DELETE)
-    registro_id TEXT NOT NULL,            -- ID do registro afetado
-    usuario_responsavel VARCHAR(100) DEFAULT current_user, -- Usuário responsável
-    dados_anteriores JSONB,               -- Dados antes da operação
-    dados_novos JSONB,                    -- Dados após a operação
-    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Data e hora do evento
-);
-COMMENT ON TABLE public.auditoria IS 'Tabela de auditoria para registrar alterações nas tabelas do sistema';
-COMMENT ON COLUMN public.auditoria.tabela_alterada IS 'Nome da tabela alterada';
-COMMENT ON COLUMN public.auditoria.operacao IS 'Tipo de operação realizada';
-COMMENT ON COLUMN public.auditoria.registro_id IS 'ID do registro afetado';
-COMMENT ON COLUMN public.auditoria.usuario_responsavel IS 'Usuário que realizou a operação';
-COMMENT ON COLUMN public.auditoria.dados_anteriores IS 'Dados do registro antes da alteração';
-COMMENT ON COLUMN public.auditoria.dados_novos IS 'Dados do registro após a alteração';
-COMMENT ON COLUMN public.auditoria.data_hora IS 'Data e hora do evento de auditoria';
-
 CREATE OR REPLACE FUNCTION registrar_auditoria()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -25,18 +5,52 @@ DECLARE
     dados_depois JSONB;
     registro_id TEXT;
 BEGIN
-    -- Identifica o registro_id com base nos dados disponíveis (OLD ou NEW)
+    -- Verifica a operação realizada na tabela
     IF (TG_OP = 'DELETE') THEN
-        dados_antes := TO_JSONB(OLD) - ARRAY['senha', 'senhafun'];
+        -- Captura os dados antes da exclusão e define NULL para os novos dados
+        dados_antes := TO_JSONB(OLD) - 'senha' - 'senhafun';
         dados_depois := NULL;
-        registro_id := OLD.idusu::TEXT;
+
+        -- Determina o ID do registro baseado na tabela
+        CASE TG_TABLE_NAME
+            WHEN 'pessoa' THEN
+                registro_id := OLD.idpes::TEXT;
+            WHEN 'ocorrencia' THEN
+                registro_id := OLD.idoco::TEXT;
+            WHEN 'funcionario' THEN
+                registro_id := OLD.pessoaidpes::TEXT;
+            WHEN 'usuario' THEN
+                registro_id := OLD.idusu::TEXT; -- Adicionado para a tabela 'usuario'
+            ELSE
+                registro_id := NULL; -- Caso a tabela não tenha ID reconhecido
+        END CASE;
+
     ELSE
-        dados_antes := TO_JSONB(OLD) - ARRAY['senha', 'senhafun'];
-        dados_depois := TO_JSONB(NEW) - ARRAY['senha', 'senhafun'];
-        registro_id := COALESCE(NEW.idusu::TEXT, OLD.idusu::TEXT);
+        -- Captura os dados antes e depois da alteração/inserção
+        dados_antes := COALESCE(TO_JSONB(OLD), '{}') - 'senha' - 'senhafun'; 
+        dados_depois := COALESCE(TO_JSONB(NEW), '{}') - 'senha' - 'senhafun';
+
+        -- Determina o ID do registro baseado na tabela
+        CASE TG_TABLE_NAME
+            WHEN 'pessoa' THEN
+                registro_id := NEW.idpes::TEXT;
+            WHEN 'ocorrencia' THEN
+                registro_id := NEW.idoco::TEXT;
+            WHEN 'funcionario' THEN
+                registro_id := NEW.pessoaidpes::TEXT;
+            WHEN 'usuario' THEN
+                registro_id := NEW.idusu::TEXT; -- Adicionado para a tabela 'usuario'
+            ELSE
+                registro_id := NULL; -- Caso a tabela não tenha ID reconhecido
+        END CASE;
     END IF;
 
-    -- Insere o registro de auditoria
+    -- Garante que o registro_id não seja NULL
+    IF registro_id IS NULL THEN
+        RAISE EXCEPTION 'registro_id não identificado para a tabela %', TG_TABLE_NAME;
+    END IF;
+
+    -- Insere o registro na tabela de auditoria
     INSERT INTO public.auditoria (
         tabela_alterada,
         operacao,
@@ -47,16 +61,16 @@ BEGIN
         data_hora
     )
     VALUES (
-        TG_TABLE_NAME,    -- Nome da tabela
-        TG_OP,            -- Operação (INSERT, UPDATE, DELETE)
-        registro_id,      -- ID do registro afetado
-        current_user,     -- Usuário responsável
-        dados_antes,      -- Dados antes da operação
-        dados_depois,     -- Dados depois da operação
-        CURRENT_TIMESTAMP -- Data e hora do evento
+        TG_TABLE_NAME,                   -- Nome da tabela que foi alterada
+        TG_OP,                           -- Tipo de operação (INSERT, UPDATE, DELETE)
+        registro_id,                     -- ID do registro afetado
+        current_user,                    -- Usuário que realizou a operação
+        dados_antes,                     -- Dados antes da operação
+        dados_depois,                    -- Dados após a operação
+        CURRENT_TIMESTAMP                -- Timestamp da auditoria
     );
 
-    RETURN NULL; -- Trigger AFTER não altera o fluxo principal
+    RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -67,5 +81,18 @@ AFTER INSERT OR UPDATE OR DELETE ON public.usuario
 FOR EACH ROW
 EXECUTE FUNCTION registrar_auditoria();
 
+CREATE TRIGGER auditoria_ocorrencia
+AFTER INSERT OR UPDATE OR DELETE ON public.ocorrencia
+FOR EACH ROW
+EXECUTE FUNCTION registrar_auditoria();
 
 
+CREATE TRIGGER auditoria_pessoa
+AFTER INSERT OR UPDATE OR DELETE ON public.pessoa
+FOR EACH ROW
+EXECUTE FUNCTION registrar_auditoria();
+
+CREATE TRIGGER auditoria_funcionario
+AFTER INSERT OR UPDATE OR DELETE ON public.funcionario
+FOR EACH ROW
+EXECUTE FUNCTION registrar_auditoria();
