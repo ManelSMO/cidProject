@@ -17,6 +17,13 @@ html, body {
   background-color: var(--background);
   font-family: 'Poppins', sans-serif;
   color: var(--foreground);
+  overflow-x: hidden; /* Evita rolagem horizontal */
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-y: auto; 
 }
 
 * {

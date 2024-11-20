@@ -1,5 +1,10 @@
 .container {
   padding: 20px;
+  padding-top: 120px;
+  justify-content: flex-start;
+  justify-content: flex-start; /* Garante que o conteúdo comece no topo */
+  overflow-y: auto; /* Permite rolagem vertical caso o conteúdo ultrapasse o tamanho da tela */
+  box-sizing: border-box; /* Inclui padding e bordas no cálculo de altura */
 }
 
 .header {
@@ -13,6 +18,14 @@
   left: 0;
   width: 100%; /* Ocupa toda a largura */
   z-index: 1000; /* Garante que fique acima de tudo */
+  height: 90px; /* Define uma altura fixa para o cabeçalho */
+  box-sizing: border-box; /* Inclui padding e bordas no cálculo de altura */
+}
+
+.mainContent {
+  margin-top: 60px; /* Espaço para não sobrepor a barra fixa */
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
@@ -32,9 +45,10 @@
 .form {
   display: flex;
   flex-wrap: wrap;
-  gap: 40px; /* Espaçamento entre colunas */
+  gap: 65px; /* Espaçamento entre colunas */
   justify-content: center;
   align-items: flex-start;
+  overflow-y: auto;
 }
 
 .section {
@@ -78,18 +92,23 @@ textarea.field {
   background-color: #8b1a1a;
 }
 
-.submitButton {
-  background-color: #b22222;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  margin: 20px auto;
-  display: block;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
 .submitButton:hover {
   background-color: #8b1a1a;
+}
+
+.participation {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px; /* Adiciona um espaço abaixo da participação */
+}
+
+.participationTitle {
+  font-weight: bold;
+  color: #b22222; /* Cor vermelha para o título */
+  margin-bottom: 10px;
+}
+
+.checkbox {
+  margin-right: 10px;
 }

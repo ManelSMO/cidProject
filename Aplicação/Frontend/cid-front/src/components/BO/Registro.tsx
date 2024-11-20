@@ -3,14 +3,13 @@ import styles from './Registro.module.css';
 import { useRouter } from 'next/router';
 
 interface RegistroProps {
-    onHomeClick: () => void;
-  }
+  onHomeClick: () => void;
+}
 
-  const RegistrarOcorrencia: React.FC<RegistroProps> = ({ onHomeClick }) => {
-
-  // Estados para os campos do formulário
+const RegistrarOcorrencia: React.FC<RegistroProps> = ({ onHomeClick }) => {
   const [tipoOcorrencia, setTipoOcorrencia] = useState('');
   const [houveViolencia, setHouveViolencia] = useState(false);
+  const [tipoViolencia, setTipoViolencia] = useState(''); // Novo estado
   const [dataOcorrencia, setDataOcorrencia] = useState('');
   const [horaOcorrencia, setHoraOcorrencia] = useState('');
   const [cidade, setCidade] = useState('');
@@ -19,36 +18,45 @@ interface RegistroProps {
   const [descricaoEnvolvido, setDescricaoEnvolvido] = useState('');
   const [cpfEnvolvido, setCpfEnvolvido] = useState('');
   const [nascimentoEnvolvido, setNascimentoEnvolvido] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [email, setEmail] = useState('');
+  const [telefone, setTelefone] = useState("");
+  const [email, setEmail] = useState("");
   const [descricaoOcorrencia, setDescricaoOcorrencia] = useState('');
   const [anexo, setAnexo] = useState<File | null>(null);
 
-  // Função para salvar os dados do envolvido
+  const router = useRouter();
+
+  const handleParticipationChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setParticipacao(event.target.value); // Atualiza diretamente o valor selecionado
+  };
+
+  const [participacao, setParticipacao] = useState("");
+
   const handleSalvarEnvolvido = () => {
     console.log('Dados do envolvido salvos:', {
       nomeEnvolvido,
       descricaoEnvolvido,
       cpfEnvolvido,
       nascimentoEnvolvido,
+      telefone,
+      email,
+      participacao,
     });
 
-    // Limpa os campos após salvar
     setNomeEnvolvido('');
     setDescricaoEnvolvido('');
     setCpfEnvolvido('');
     setNascimentoEnvolvido('');
+    setTelefone("");
+    setEmail("");
+    setParticipacao("");
   };
 
-  // Função para registrar a ocorrência
   const handleRegistrarOcorrencia = (e: React.FormEvent) => {
-
-    const router = useRouter();
-    
     e.preventDefault();
     console.log('Ocorrência registrada:', {
       tipoOcorrencia,
       houveViolencia,
+      tipoViolencia, // Incluído no registro
       dataOcorrencia,
       horaOcorrencia,
       cidade,
@@ -58,19 +66,18 @@ interface RegistroProps {
       email,
       anexo,
     });
-    router.push('/confirmacao'); // Redireciona para a tela de confirmação
+    router.push('/confirmacao');
   };
-
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <img src="/image/logo2.png" alt="CID Logo" className={styles.logo} />
         <img
-        src="/image/home-icon.png"
-        alt="Home"
-        className={styles.homeIcon}
-        onClick={onHomeClick}
+          src="/image/home-icon.png"
+          alt="Home"
+          className={styles.homeIcon}
+          onClick={onHomeClick}
         />
       </div>
       <form className={styles.form} onSubmit={handleRegistrarOcorrencia}>
@@ -86,7 +93,15 @@ interface RegistroProps {
               <option value="">Selecione</option>
               <option value="roubo">Roubo</option>
               <option value="furto">Furto</option>
-              <option value="agressao">Agressão</option>
+              <option value="acidente">Acidente de Trânsito</option>
+              <option value="ameaca">Ameaça</option>
+              <option value="estelionato">Estelionato</option>
+              <option value="danopat">Dano ao Patrimônio</option>
+              <option value="violenciadom">Violência Doméstica</option>
+              <option value="desaparecimento">Desaparecimento de Pessoa</option>
+              <option value="possedrogas">Posse de Drogas</option>
+              <option value="trafico">Tráfico de Drogas</option>
+              <option value="agressao">Agressão Física</option>
             </select>
           </label>
           <div className={styles.radioGroup}>
@@ -105,11 +120,31 @@ interface RegistroProps {
                 type="radio"
                 value="nao"
                 checked={!houveViolencia}
-                onChange={() => setHouveViolencia(false)}
+                onChange={() => {
+                  setHouveViolencia(false);
+                  setTipoViolencia(''); // Limpa o tipo de violência se "Não" for selecionado
+                }}
               />
               NÃO
             </label>
           </div>
+          {houveViolencia && (
+            <label>
+              Tipo de Violência:*
+              <select
+                value={tipoViolencia}
+                onChange={(e) => setTipoViolencia(e.target.value)}
+                required
+                className={styles.field}
+              >
+                <option value="">Selecione</option>
+                <option value="fisica">Física</option>
+                <option value="psicologica">Psicológica</option>
+                <option value="sexual">Sexual</option>
+                <option value="outros">Outros</option>
+              </select>
+            </label>
+          )}
           <label>
             Data e Hora da Ocorrência:*
             <div className={styles.dateTimeGroup}>
@@ -151,6 +186,53 @@ interface RegistroProps {
         </div>
         <div className={styles.section}>
           <h3>Inserir um novo envolvido</h3>
+          <div className={styles.participation}>
+            <span className={styles.participationTitle}>Participação do envolvido*</span>
+            <label>
+              <input
+                type="radio"
+                name="participacao" // Agrupa as opções
+                value="Comunicante"
+                checked={participacao === "Comunicante"}
+                onChange={(e) => setParticipacao(e.target.value)}
+                className={styles.radio}
+              />
+              Comunicante
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="participacao" // Agrupa as opções
+                value="Vítima"
+                checked={participacao === "Vítima"}
+                onChange={(e) => setParticipacao(e.target.value)}
+                className={styles.radio}
+              />
+              Vítima
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="participacao" // Agrupa as opções
+                value="Testemunha"
+                checked={participacao === "Testemunha"}
+                onChange={(e) => setParticipacao(e.target.value)}
+                className={styles.radio}
+              />
+              Testemunha
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="participacao" // Agrupa as opções
+                value="Suspeito"
+                checked={participacao === "Suspeito"}
+                onChange={(e) => setParticipacao(e.target.value)}
+                className={styles.radio}
+              />
+              Suspeito
+            </label>
+          </div>
           <label>
             Nome Completo:
             <input
@@ -181,7 +263,9 @@ interface RegistroProps {
               className={styles.field}
             />
           </label>
-          <label>
+        </div>
+        <div className={styles.section}>
+        <label>
             Data de Nascimento:
             <input
               type="date"
@@ -191,12 +275,7 @@ interface RegistroProps {
               className={styles.field}
             />
           </label>
-          <button type="button" onClick={handleSalvarEnvolvido} className={styles.button}>
-            Salvar Envolvido
-          </button>
-        </div>
-        <div className={styles.section}>
-          <label>
+        <label>
             Telefone:
             <input
               type="text"
@@ -216,6 +295,9 @@ interface RegistroProps {
               className={styles.field}
             />
           </label>
+          <button type="button" onClick={handleSalvarEnvolvido} className={styles.button}>
+            Salvar Envolvido
+          </button>
           <label>
             Descrição da Ocorrência:
             <textarea
@@ -233,10 +315,10 @@ interface RegistroProps {
               className={styles.field}
             />
           </label>
-        </div>
-        <button type="submit" className={styles.submitButton}>
+          <button type="submit" className={styles.button}>
           Registrar
         </button>
+        </div>
       </form>
     </div>
   );
