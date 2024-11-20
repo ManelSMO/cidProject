@@ -6,7 +6,8 @@ import LoginPolicial from '../components/Login/LoginPolicial';
 import CadastroCidadao from '../components/Cadastros/CadastroCidadao';
 import CadastroPolicial from '../components/Cadastros/CadastroPolicial';
 import Menu from '../components/Menu';
-import Registro from '../components/BO/Registro'; // Importando o componente Registro
+import Registro from '../components/BO/Registro';
+import Consultar from '../components/BO/Consultar';
 
 const Index: React.FC = () => {
   // Estado para controlar qual página exibir
@@ -52,7 +53,7 @@ const Index: React.FC = () => {
         <Registro onHomeClick={() => setActivePage('menu')} />
       )}
       {activePage === 'consultarBoletins' && (
-        <div>Consultar Meus Boletins de Ocorrência (Placeholder)</div> /* Placeholder para futura tela */
+        <Consultar onHomeClick={() => setActivePage('menu')} />
       )}
     </>
   );
