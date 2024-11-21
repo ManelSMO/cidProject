@@ -10,6 +10,8 @@ CREATE TABLE public.auditoria (
 );
 
 
+
+
 CREATE OR REPLACE FUNCTION registrar_auditoria()
 RETURNS TRIGGER AS $$
 DECLARE

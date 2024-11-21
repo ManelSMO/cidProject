@@ -49,10 +49,10 @@ COMMENT ON COLUMN usuario.status IS 'Status do usuário (ativo ou inativo)';
 
 -- Tabela de acesso para cidadãos
 CREATE TABLE acesso_cidadao (
-    idacessoc SERIAL PRIMARY KEY,
-    usuarioidusu INT NOT NULL UNIQUE,
+    usuarioidusu INT NOT NULL,
     cpfusu VARCHAR(14) NOT NULL UNIQUE, -- CPF formatado
-    senusu VARCHAR(255) NOT NULL,       -- Senha do cidadão
+    senusu VARCHAR(255) NOT NULL, -- Senha do cidadão
+    primary key (usuarioidusu),
     FOREIGN KEY (usuarioidusu) REFERENCES usuario (idusu) ON DELETE CASCADE
 );
 COMMENT ON TABLE acesso_cidadao IS 'Tabela de credenciais de acesso para cidadãos';
@@ -61,10 +61,10 @@ COMMENT ON COLUMN acesso_cidadao.senusu IS 'Senha do cidadão';
 
 -- Tabela de acesso para policiais
 CREATE TABLE acesso_policial (
-    idacessop SERIAL PRIMARY KEY,
-    usuarioidusu INT NOT NULL UNIQUE,
+    usuarioidusu INT NOT NULL,
     matfun VARCHAR(10) NOT NULL UNIQUE, -- Matrícula do policial
     senhafun VARCHAR(255) NOT NULL,     -- Senha do policial
+    primary key (usuarioidusu),
     FOREIGN KEY (usuarioidusu) REFERENCES usuario (idusu) ON DELETE CASCADE
 );
 COMMENT ON TABLE acesso_policial IS 'Tabela de credenciais de acesso para policiais';
@@ -133,15 +133,13 @@ CREATE TABLE pessoa (
     numtelpes NUMERIC(14, 0) NOT NULL CHECK (numtelpes > 0),
     emailpes VARCHAR(80) NOT NULL CHECK (emailpes LIKE '%@%'),
     genpes VARCHAR(15) NOT NULL CHECK (genpes IN ('Masculino', 'Feminino', 'Outro')),
-    usuarioidusu INT4 NOT NULL,
     Fotpes BYTEA,
     acesso_cidadao int4,
     acesso_policial int4,
     PRIMARY KEY (idpes),
-    FOREIGN KEY (acesso_cidadao) REFERENCES acesso_cidadao (idacessoc),
-    FOREIGN KEY (acesso_policial) REFERENCES acesso_policial (idacessop)
-    
-);
+    FOREIGN KEY (acesso_cidadao) REFERENCES acesso_cidadao (usuarioidusu),
+    FOREIGN KEY (acesso_policial) REFERENCES acesso_policial (usuarioidusu)
+    );
 COMMENT ON TABLE pessoa IS 'Tabela de pessoas para registro';
 
 -- Tabela funcionário

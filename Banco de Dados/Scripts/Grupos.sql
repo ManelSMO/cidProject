@@ -4,33 +4,47 @@ CREATE ROLE grupo_policia;
 create role grupo_admin;
 
 
+
 ---------- Trigger dos Grupos -----------------
 -- Trigger que atribui automaticamente um usuario a uma role, dependendo do tipo de usuario que ele é
 
-CREATE OR REPLACE FUNCTION atribuir_role_ao_usuario()
+CREATE OR REPLACE FUNCTION atribuir_role()
 RETURNS TRIGGER AS $$
+DECLARE
+    senha_usuario VARCHAR(255);
 BEGIN
-    -- Verifica o tipo de usuário e atribui a role correspondente
+    -- Determina a senha com base no tipo de usuário
     IF NEW.tipo_usu = 'Cidadão' THEN
-        EXECUTE format('GRANT grupo_cidadao TO %I', NEW.idusu);
-    ELSIF NEW.tipo_usu = 'Policia' THEN
-        EXECUTE format('GRANT grupo_policia TO %I', NEW.idusu);
-    ELSIF NEW.tipo_usu = 'Admin' THEN
-        EXECUTE format('GRANT grupo_admin TO %I', NEW.idusu);
+        SELECT senusu INTO senha_usuario 
+        FROM acesso_cidadao 
+        WHERE usuarioidusu = NEW.idusu;
+
+        -- Cria o usuário no banco de dados e atribui a role
+        EXECUTE format('CREATE USER %I WITH PASSWORD %L', NEW.idusu::TEXT, senha_usuario);
+        EXECUTE format('GRANT grupo_cidadao TO %I', NEW.idusu::TEXT);
+
+    ELSIF NEW.tipo_usu = 'Policial' THEN
+        SELECT senhafun INTO senha_usuario 
+        FROM acesso_policial 
+        WHERE usuarioidusu = NEW.idusu;
+
+        -- Cria o usuário no banco de dados e atribui a role
+        EXECUTE format('CREATE USER %I WITH PASSWORD %L', NEW.idusu::TEXT, senha_usuario);
+        EXECUTE format('GRANT grupo_policia TO %I', NEW.idusu::TEXT);
+
     ELSE
-        -- Caso não corresponda a nenhum tipo, não atribui role
-        RAISE NOTICE 'Usuário % não recebeu nenhuma role específica.', NEW.idusu;
+        RAISE EXCEPTION 'Tipo de usuário desconhecido: %', NEW.tipo_usu;
     END IF;
 
-    -- Retorna o novo registro de usuário para que ele seja inserido normalmente
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER trigger_atribuir_role_ao_usuario
-AFTER INSERT ON public.usuario
+
+CREATE TRIGGER trigger_atribuir_role
+AFTER INSERT ON usuario
 FOR EACH ROW
-EXECUTE FUNCTION atribuir_role_ao_usuario();
+EXECUTE FUNCTION atribuir_role();
 
 
 
