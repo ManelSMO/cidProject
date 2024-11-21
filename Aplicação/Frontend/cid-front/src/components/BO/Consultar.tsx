@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './Consultar.module.css';
 
-const Consultar = ({ onHomeClick }) => { // Aceitando a prop `onHomeClick`
+const Consultar = ({ onHomeClick, perfil }) => { // Adicionando a prop `perfil`
   const [cpf, setCpf] = useState("");
   const [dadosBO, setDadosBO] = useState([]);
 
@@ -25,6 +25,12 @@ const Consultar = ({ onHomeClick }) => { // Aceitando a prop `onHomeClick`
       console.error("Erro ao buscar BO:", error);
       alert("Ocorreu um erro ao buscar os dados.");
     }
+  };
+
+  const handleEditar = (boId) => {
+    // Implementar a lógica de edição/confirmar aqui
+    console.log(`Editar BO ${boId}`);
+    alert(`Função de edição para BO ${boId} ainda não implementada.`);
   };
 
   return (
@@ -64,6 +70,16 @@ const Consultar = ({ onHomeClick }) => { // Aceitando a prop `onHomeClick`
               <p><strong>Data:</strong> {bo.dataOcorrencia}</p>
               <p><strong>Local:</strong> {bo.localOcorrencia}</p>
               <p><strong>Descrição:</strong> {bo.descricao}</p>
+
+              {/* Botão visível apenas para policiais */}
+              {perfil === "policial" && (
+                <button
+                  className={styles.editarButton}
+                  onClick={() => handleEditar(bo.id)}
+                >
+                  Editar/Confirmar
+                </button>
+              )}
             </div>
           ))
         )}
