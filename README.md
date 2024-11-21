@@ -86,7 +86,7 @@ Desenvolvedores do Projeto:
     </td>
     <td align="center">
       <a href="#">
-        <img src="Documentação do projeto/Imagens/luan.jpeg" width="100px;" alt="Luan"/><br>
+        <img src="Documentação do projeto/Imagens/luan.jpeg" width="85px;" alt="Luan"/><br>
         <sub>
           <b>Luan Tenroller</b>
         </sub>
