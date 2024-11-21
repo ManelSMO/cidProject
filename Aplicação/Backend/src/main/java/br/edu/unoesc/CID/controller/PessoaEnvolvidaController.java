@@ -18,19 +18,23 @@ public class PessoaEnvolvidaController {
     private PessoaEnvolvidaService pessoaEnvolvidaService;
 
     @PostMapping("/adicionar")
-    public ResponseEntity<PessoaEnvolvida> adicionarPessoaEnvolvida(@Valid @RequestBody PessoaEnvolvida pessoaEnvolvida) {
-        PessoaEnvolvida novaPessoaEnvolvida = pessoaEnvolvidaService.adicionarPessoaEnvolvida(pessoaEnvolvida);
-        return ResponseEntity.ok(novaPessoaEnvolvida);
+    public ResponseEntity<String> adicionarPessoaEnvolvida(@Valid @RequestBody PessoaEnvolvida pessoaEnvolvida) {
+        try {
+            pessoaEnvolvidaService.adicionarPessoaEnvolvida(pessoaEnvolvida);
+            return ResponseEntity.ok("Pessoa envolvida adicionada com sucesso!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/ocorrencia/{idOcorrencia}")
-    public ResponseEntity<List<PessoaEnvolvida>> listarPessoasEnvolvidasPorOcorrencia(@PathVariable Integer idOcorrencia) {
+    public ResponseEntity<List<PessoaEnvolvida>> listarPessoasEnvolvidasPorOcorrencia(@PathVariable Long idOcorrencia) {
         List<PessoaEnvolvida> pessoas = pessoaEnvolvidaService.listarPessoasEnvolvidasPorOcorrencia(idOcorrencia);
         return ResponseEntity.ok(pessoas);
     }
 
     @GetMapping("/ocorrencias/{id}/pessoas-envolvidas")
-    public ResponseEntity<List<PessoaEnvolvida>> listarPessoasEnvolvidas(@PathVariable Integer id) {
+    public ResponseEntity<List<PessoaEnvolvida>> listarPessoasEnvolvidas(@PathVariable Long id) {
         List<PessoaEnvolvida> pessoasEnvolvidas = pessoaEnvolvidaService.listarPessoasEnvolvidasPorOcorrencia(id);
         return ResponseEntity.ok(pessoasEnvolvidas);
     }

@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -11,16 +14,13 @@ import lombok.Setter;
 public class TipoEnvolvimento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long idTipoEnvolvimento;
-
     @Column(name = "tipenv", nullable = false)
     protected String tipoEnvolvimento;
 
     @Column(name = "desctipenv", nullable = false)
     protected String descTipoEnvolvimento;
 
-    @OneToOne
-    protected PessoaEnvolvida pessoaEnvolvimento;
+    @OneToMany(mappedBy = "tipoEnvolvimento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PessoaEnvolvida> pessoasEnvolvidas = new ArrayList<>();
 
 }

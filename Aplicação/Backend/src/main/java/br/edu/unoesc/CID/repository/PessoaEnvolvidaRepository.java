@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PessoaEnvolvidaRepository extends JpaRepository<PessoaEnvolvida, Integer> {
-    List<PessoaEnvolvida> findByOcorrenciaId(Integer idOcorrencia);
+public interface PessoaEnvolvidaRepository extends JpaRepository<PessoaEnvolvida, Long> {
+    List<PessoaEnvolvida> findByOcorrenciaIdOcorrencia(Long idOcorrencia); // Corrigido para idOcorrencia
 }

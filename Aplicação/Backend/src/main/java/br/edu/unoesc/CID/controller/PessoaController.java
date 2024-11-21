@@ -2,7 +2,9 @@ package br.edu.unoesc.CID.controller;
 
 import br.edu.unoesc.CID.entity.Pessoa;
 import br.edu.unoesc.CID.service.PessoaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,20 +17,24 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @PostMapping("/cadastrar")
-    public Pessoa cadastrarPessoa(@RequestBody Pessoa pessoa) {
-
-        return pessoaService.cadastrarPessoa(pessoa);
+    public ResponseEntity<String> cadastrarPessoa(@Valid @RequestBody Pessoa pessoa) {
+        try {
+            pessoaService.cadastrarPessoa(pessoa);
+            return ResponseEntity.ok("Pessoa cadastrada com sucesso!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping
-    public List<Pessoa> listarPessoas() {
-
-        return pessoaService.listarPessoas();
+    public ResponseEntity<List<Pessoa>> listarPessoas() {
+        List<Pessoa> pessoas = pessoaService.listarPessoas();
+        return ResponseEntity.ok(pessoas);
     }
 
     @GetMapping("/{id}")
-    public Pessoa buscarPessoaPorId(@PathVariable Integer id) {
-
-        return pessoaService.buscarPessoaPorId(id);
+    public ResponseEntity<Pessoa> buscarPessoaPorId(@PathVariable Long id) {
+        Pessoa pessoa = pessoaService.buscarPessoaPorId(id);
+        return ResponseEntity.ok(pessoa);
     }
 }

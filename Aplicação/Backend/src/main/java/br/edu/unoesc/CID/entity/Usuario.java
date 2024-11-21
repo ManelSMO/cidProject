@@ -28,10 +28,17 @@ public class Usuario {
     @Size(min = 6, message = "A senha deve ter no mínimo 6 caracteres")
     private String senhaUsuario;
 
+    @Column(name = "status", nullable = false)
+    private Boolean status;
+
+    @Column(name = "atualizado_em")
+    private String atualizadoEm;
+
     @OneToOne
     protected Pessoa pessoa;
 
     @Enumerated(EnumType.STRING) // Enum para diferenciar tipos de usuários
+    @Column(name = "tipo_usu", nullable = false)
     private TipoUsuario tipoUsuario;
 
 }

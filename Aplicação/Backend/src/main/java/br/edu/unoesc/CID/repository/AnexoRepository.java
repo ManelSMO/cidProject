@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AnexoRepository extends JpaRepository<Anexos, Integer> {
-    List<Anexos> findByOcorrenciaId(Integer idOcorrencia);
+public interface AnexoRepository extends JpaRepository<Anexos, Long> {
+    List<Anexos> findByOcorrenciaIdOcorrencia(Long idOcorrencia);
+
 }

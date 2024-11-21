@@ -29,10 +29,15 @@ public class PessoaEnvolvida {
     @Column(name = "datnasenv")
     protected String dataNascPessoaEnvolvida;
 
-    @ManyToOne
-    protected Ocorrencia ocorrencia;
+    @Column(name = "emailenv")
+    private String email;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "ocorrenciaidoco", nullable = false)
+    private Ocorrencia ocorrencia;
+
+    @ManyToOne
+    @JoinColumn(name = "tipo_envolvimentotipenv", nullable = false)
     protected TipoEnvolvimento tipoEnvolvimento;
 
 }

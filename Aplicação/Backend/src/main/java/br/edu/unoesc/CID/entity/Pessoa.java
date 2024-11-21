@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,19 +33,28 @@ public class Pessoa {
     @Column(name = "emailpes", nullable = false)
     protected String emailPessoa;
 
+    @Column(name = "genpes", nullable = false)
+    protected String generoPessoa;
+
     @ManyToOne
     @JoinColumn(name = "endereco_pessoa_id_endereco")
     protected EnderecoPessoa enderecoPessoa;
 
-    @Column(name = "genpes", nullable = false)
-    protected String generoPessoa;
+    @OneToOne
+    @JoinColumn(name = "usuarioidusu", nullable = false)
+    private Usuario usuario;
 
     @OneToOne
-    protected Usuario usuario;
+    @JoinColumn(name = "acesso_policial")
+    private AcessoPolicial acessoPolicial;
+
+    @OneToOne
+    @JoinColumn(name = "acesso_cidadao")
+    private AcessoCidadao acessoCidadao;
 
     @OneToOne
     protected Funcionario funcionario;
 
-    @OneToMany(mappedBy = "EnderecoPessoa")
-    protected Set<EnderecoPessoa> enderecoPessoas;
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<EnderecoPessoa> enderecoPessoas = new HashSet<>();
 }

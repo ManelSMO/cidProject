@@ -25,11 +25,14 @@ public class EnderecoPessoa {
     protected String complementoPessoa;
 
     @ManyToOne
+    @JoinColumn(name = "bairroidbai", nullable = false)
     protected Bairro bairro;
 
     @ManyToOne
+    @JoinColumn(name = "cidadeidcid", nullable = false)
     protected Cidade cidade;
 
     @ManyToOne
-    protected Pessoa pessoa;
+    @JoinColumn(name = "pessoaidpes", nullable = false)
+    private Pessoa pessoa;
 }

@@ -1,9 +1,10 @@
 package br.edu.unoesc.CID.controller;
 
 
+import br.edu.unoesc.CID.entity.AcessoCidadao;
+import br.edu.unoesc.CID.entity.AcessoPolicial;
 import br.edu.unoesc.CID.entity.Usuario;
 import br.edu.unoesc.CID.service.UsuarioService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,26 @@ public class UsuarioController {
     protected final UsuarioService usuarioService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrarUsuario(@Valid @RequestBody Usuario usuario) {
+    public ResponseEntity<String> cadastrarUsuario(
+            @RequestBody Usuario usuario,
+            @RequestBody AcessoCidadao acessoCidadao) {
+
         try {
-            // Salva o usuário diretamente
-            usuarioService.cadastrarUsuario(usuario);
-            return ResponseEntity.ok("Usuário cadastrado com sucesso!");
+            usuarioService.cadastrarUsuario(usuario, acessoCidadao);
+            return ResponseEntity.ok("Usuário Civil cadastrado com sucesso.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/cadastrar-policial")
+    public ResponseEntity<String> cadastrarUsuarioPolicial(
+            @RequestBody Usuario usuario,
+            @RequestBody AcessoPolicial acessoPolicial) {
+
+        try {
+            usuarioService.cadastrarUsuarioPolicial(usuario, acessoPolicial);
+            return ResponseEntity.ok("Usuário Policial cadastrado com sucesso.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

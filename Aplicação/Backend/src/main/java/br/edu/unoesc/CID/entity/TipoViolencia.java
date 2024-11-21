@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,6 +20,6 @@ public class TipoViolencia {
     @Column(name = "desctipvio")
     protected String descTipoViolencia;
 
-    @OneToMany(mappedBy = "Ocorrencia")
-    protected Set<Ocorrencia> ocorrencia;
+    @OneToMany(mappedBy = "tipoViolencia", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ocorrencia> ocorrencias = new ArrayList<>();
 }

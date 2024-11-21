@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PessoaRepository extends JpaRepository<Pessoa, Integer> {
-
-    List<Pessoa> findByNomeContaining(String nome);
+public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
+    List<Pessoa> findByNomePessoaContaining(String nomePessoa);
 }
+

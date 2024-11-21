@@ -30,14 +30,11 @@ public class DepartamentoPolicial {
     protected String numeroDepartamento;
 
     @OneToOne
-    @JoinColumn(name = "idbai")
+    @JoinColumn(name = "bairroidbai", nullable = false)
     private Bairro bairro;
 
     @OneToOne
-    @JoinColumn(name = "idcid")
+    @JoinColumn(name = "cidadeidcid", nullable = false)
     private Cidade cidade;
-
-    @OneToOne
-    private Funcionario funcionario; // Relacionamento não mapeado, ajuste opcional
 
 }

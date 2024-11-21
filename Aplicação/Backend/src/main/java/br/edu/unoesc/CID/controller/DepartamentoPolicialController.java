@@ -4,7 +4,6 @@ import br.edu.unoesc.CID.entity.DepartamentoPolicial;
 import br.edu.unoesc.CID.service.DepartamentoPolicialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController

@@ -1,17 +1,13 @@
 package br.edu.unoesc.CID.service;
 
-
 import br.edu.unoesc.CID.entity.Ocorrencia;
 import br.edu.unoesc.CID.entity.TipoUsuario;
 import br.edu.unoesc.CID.entity.Usuario;
 import br.edu.unoesc.CID.repository.OcorrenciaRepository;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 
@@ -23,10 +19,14 @@ public class OcorrenciaService {
     @Autowired
     private final OcorrenciaRepository ocorrenciaRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(OcorrenciaService.class);
-
     //Metodo para registro de nova ocorrencia
-    public Ocorrencia novaOcorrencia(Ocorrencia ocorrencia) {
+    public Ocorrencia novaOcorrencia(Ocorrencia ocorrencia, Usuario usuario) {
+        // Associa o usuário à ocorrência (se necessário)
+        if (usuario.getTipoUsuario() == TipoUsuario.CIVIL) {
+            ocorrencia.setCpfCivil(usuario.getCpfPessoa()); // Adicione o CPF do usuário à ocorrência
+        }
+
+        // Salva a ocorrência
         return ocorrenciaRepository.save(ocorrencia);
     }
 
@@ -51,7 +51,6 @@ public class OcorrenciaService {
     }
 
     public List<Object[]> listarOcorrenciasValidadas() {
-
         return ocorrenciaRepository.listarOcorrenciasValidadas();
     }
 
@@ -60,12 +59,18 @@ public class OcorrenciaService {
     }
 
     public Boolean verificarCpfExistente(String cpf) {
-
         return ocorrenciaRepository.verificarCpfExistente(cpf);
     }
 
     public List<Ocorrencia> listarOcorrencias() {
         return ocorrenciaRepository.findAll();
+    }
+
+    public void atualizarStatusOcorrencia(Long idoco, String novoStatus) {
+        Ocorrencia ocorrencia = ocorrenciaRepository.findById(idoco)
+                .orElseThrow(() -> new IllegalArgumentException("Ocorrência não encontrada"));
+        ocorrencia.setStatus(novoStatus);
+        ocorrenciaRepository.save(ocorrencia);
     }
 
 }

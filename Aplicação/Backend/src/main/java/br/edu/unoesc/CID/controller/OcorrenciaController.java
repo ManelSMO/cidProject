@@ -1,37 +1,42 @@
 package br.edu.unoesc.CID.controller;
 
-
-
 import br.edu.unoesc.CID.entity.Ocorrencia;
 import br.edu.unoesc.CID.entity.Usuario;
 import br.edu.unoesc.CID.service.OcorrenciaService;
-import jakarta.validation.Valid;
+import br.edu.unoesc.CID.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/Ocorrencias")
+@RequestMapping("/ocorrencias")
 @RequiredArgsConstructor
-
 public class OcorrenciaController {
 
     @Autowired
     private final OcorrenciaService ocorrenciaService;
 
+    @Autowired
+    private final UsuarioService usuarioService;
+
     @PostMapping("/registrar")
-    public ResponseEntity<Ocorrencia> novaOcorrencia(@Valid @RequestBody Ocorrencia ocorrencia) {
-        Ocorrencia novaOcorrencia = ocorrenciaService.novaOcorrencia(ocorrencia);
+    public ResponseEntity<Ocorrencia> novaOcorrencia(@RequestBody Ocorrencia ocorrencia, @RequestParam String cpfUsuario) {
+
+        // Busca o usuário pelo CPF
+        Usuario usuario = usuarioService.buscarUsuarioPorCpf(cpfUsuario);
+
+        // Registra a ocorrência vinculada ao usuário
+        Ocorrencia novaOcorrencia = ocorrenciaService.novaOcorrencia(ocorrencia, usuario);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(novaOcorrencia);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Ocorrencia> consultarOcorrencia(@PathVariable Long id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Ocorrencia> consultarOcorrencia(@PathVariable Long id, @RequestParam String cpfUsuario) {
+        Usuario usuario = usuarioService.buscarUsuarioPorCpf(cpfUsuario);
         Ocorrencia ocorrencia = ocorrenciaService.consultarOcorrencia(id, usuario);
         return ResponseEntity.ok(ocorrencia);
     }

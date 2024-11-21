@@ -21,12 +21,11 @@ public class FuncionarioController {
 
     @GetMapping
     public List<Funcionario> listarFuncionarios() {
-
         return funcionarioService.listarFuncionarios();
     }
 
     @GetMapping("/{id}")
-    public Funcionario buscarFuncionarioPorId(@PathVariable Integer id) {
+    public Funcionario buscarFuncionarioPorId(@PathVariable Long id) {
         return funcionarioService.buscarFuncionarioPorId(id);
     }
 }

@@ -25,9 +25,8 @@ public class AnexosController {
     }
 
     @GetMapping("/ocorrencia/{idOcorrencia}")
-    public ResponseEntity<List<Anexos>> listarAnexosPorOcorrencia(@PathVariable Integer idOcorrencia) {
-        List<Anexos> anexos = anexoService.listarAnexosPorOcorrencia(idOcorrencia);
-        return ResponseEntity.ok(anexos);
+    public List<Anexos> listarAnexosPorOcorrencia(@PathVariable Long idOcorrencia) {
+        return anexoService.listarAnexosPorOcorrencia(idOcorrencia);
     }
 }
 

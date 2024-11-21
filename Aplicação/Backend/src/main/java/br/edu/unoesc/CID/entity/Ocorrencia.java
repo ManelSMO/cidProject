@@ -16,7 +16,7 @@ public class Ocorrencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long idOcorrencia;
+    protected Long idOcorrencia;
 
     @Column(name = "descoco")
     protected String descricaoOcorrencia;
@@ -27,28 +27,34 @@ public class Ocorrencia {
     @Column(name = "lococo",nullable = false)
     protected String localOcorrencia;
 
+    @Column(name = "staoco", nullable = false)
+    private String status;
+
+    @Column(name = "validaoco", nullable = false)
+    private Boolean validada;
+
     private String cpfCivil; // Campo para associar ao cidadão que registrou
 
     @ManyToOne
-    @JoinColumn(name = "idtipoco")
+    @JoinColumn(name = "idtipoco", nullable = false)
     private TipoOcorrencia tipoOcorrencia;
 
     @ManyToOne
-    @JoinColumn(name = "idtipvio")
+    @JoinColumn(name = "idtipvio",  nullable = false)
     private TipoViolencia tipoViolencia;
 
     @ManyToOne
-    @JoinColumn(name = "pessoaidpes")
+    @JoinColumn(name = "funcionariopessoaidpes", nullable = false)
     private Funcionario funcionario;
 
     @ManyToOne
-    @JoinColumn(name = "idcid")
+    @JoinColumn(name = "cidadeidcid", nullable = false)
     private Cidade cidade;
 
     @OneToMany(mappedBy = "ocorrencia", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Anexos> anexos = new HashSet<>();
 
     @OneToMany(mappedBy = "ocorrencia", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PessoaEnvolvida> pessoasEnvolvidas = new HashSet<>();
+    private Set<PessoaEnvolvida> pessoasEnvolvidas;
 
 }

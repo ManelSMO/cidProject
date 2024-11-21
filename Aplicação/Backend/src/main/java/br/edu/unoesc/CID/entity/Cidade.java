@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,15 +24,18 @@ public class Cidade {
     protected String nomeCidade;
 
     @ManyToOne
-    @JoinColumn(name = "estadoidest") // FK no banco
-    private Estado estado;
+    @JoinColumn(name = "estadoidest", nullable = false)
+    protected Estado estado;
 
     @OneToMany(mappedBy = "cidade", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EnderecoPessoa> enderecos = new HashSet<>();
+    protected Set<EnderecoPessoa> enderecos = new HashSet<>();
 
     @OneToMany(mappedBy = "cidade", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Ocorrencia> ocorrencias = new HashSet<>();
+    protected Set<Ocorrencia> ocorrencias = new HashSet<>();
+
+    @OneToMany(mappedBy = "cidade", cascade = CascadeType.ALL, orphanRemoval = true)
+    protected List<Bairro> bairros = new ArrayList<>();
 
     @OneToOne(mappedBy = "cidade")
-    private DepartamentoPolicial departamentoPolicial;
+    protected DepartamentoPolicial departamentoPolicial;
 }

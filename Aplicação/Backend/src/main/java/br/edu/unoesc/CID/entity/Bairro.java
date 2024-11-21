@@ -19,11 +19,15 @@ public class Bairro{
     protected long idBairro;
 
     @Column(name = "nombai", nullable = false)
-    private String nomeBairro;
+    protected String nomeBairro;
 
     @OneToMany(mappedBy = "bairro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<EnderecoPessoa> enderecoPessoa = new HashSet<>();
+    protected Set<EnderecoPessoa> enderecoPessoa = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "cidadeidcid", nullable = false)
+    protected Cidade cidade;
 
     @OneToOne(mappedBy = "bairro")
-    private DepartamentoPolicial departamentoPolicial;
+    protected DepartamentoPolicial departamentoPolicial;
 }

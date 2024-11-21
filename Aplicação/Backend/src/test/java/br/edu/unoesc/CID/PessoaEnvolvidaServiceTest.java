@@ -37,15 +37,15 @@ public class PessoaEnvolvidaServiceTest {
         List<PessoaEnvolvida> pessoas = Arrays.asList(pessoa1, pessoa2);
 
         // Configuração do Mock
-        when(pessoaEnvolvidaRepository.findByOcorrenciaId(1)).thenReturn(pessoas);
+        when(pessoaEnvolvidaRepository.findByOcorrenciaIdOcorrencia(1L)).thenReturn(pessoas);
 
         // Execução
-        List<PessoaEnvolvida> resultado = pessoaEnvolvidaService.listarPessoasEnvolvidasPorOcorrencia(1);
+        List<PessoaEnvolvida> resultado = pessoaEnvolvidaService.listarPessoasEnvolvidasPorOcorrencia(1L);
 
         // Verificação
         assertNotNull(resultado);
         assertEquals(2, resultado.size());
         assertEquals("João", resultado.get(0).getNomePessoaEnvolvida());
-        verify(pessoaEnvolvidaRepository, times(1)).findByOcorrenciaId(1);
+        verify(pessoaEnvolvidaRepository, times(1)).findByOcorrenciaIdOcorrencia(1L);
     }
 }

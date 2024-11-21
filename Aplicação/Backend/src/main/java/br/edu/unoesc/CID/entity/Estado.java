@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+
+import java.util.List;
+
 
 
 @Entity
@@ -26,10 +28,10 @@ public class Estado {
     protected String nomeEstado;
 
     @ManyToOne
-    @JoinColumn(name = "idpais")
+    @JoinColumn(name = "paisidpais", nullable = false)
     private Pais pais;
 
     @OneToMany(mappedBy = "estado", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Cidade> cidades = new HashSet<>();
+    private List<Cidade> cidades = new ArrayList<>();
 
 }

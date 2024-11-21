@@ -34,15 +34,20 @@ public class OcorrenciaServiceTest {
     @Test
     public void novaOcorrencia_DeveSalvarOcorrencia_QuandoDadosValidos() {
         // Configuração
+        Usuario usuario = new Usuario();
+        usuario.setCpfPessoa("12345678901");
+        usuario.setTipoUsuario(TipoUsuario.CIVIL);
+
         Ocorrencia ocorrencia = new Ocorrencia();
         ocorrencia.setDescricaoOcorrencia("Roubo de celular");
         ocorrencia.setLocalOcorrencia("Rua B, 456");
         ocorrencia.setDataOcorrencia("2024-11-18");
 
+        // Configura o comportamento do repositório
         when(ocorrenciaRepository.save(any(Ocorrencia.class))).thenReturn(ocorrencia);
 
         // Execução
-        Ocorrencia resultado = ocorrenciaService.novaOcorrencia(ocorrencia);
+        Ocorrencia resultado = ocorrenciaService.novaOcorrencia(ocorrencia, usuario);
 
         // Verificação
         assertNotNull(resultado);
