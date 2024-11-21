@@ -21,29 +21,13 @@ O sistema visa agilizar o processo de comunicação com as autoridades e garanti
 
 #
 
-### 🔎✅ Requisitos Funcionais
-- Registro de Ocorrências: Cadastro completo de vítimas e autores (nome, CPF, data de nascimento, endereço, etc.). Registro detalhado do crime (tipo, data, hora, local, descrição, testemunhas, armas utilizadas, etc.). Geração automática de documentos processuais (BO, Termo de Declaração, Auto de Apreensão, etc.). Consulta de ocorrências por diversos critérios (tipo, data, local, envolvidos, etc.). Atualização do status das ocorrências (em andamento, solucionado, arquivado).
+### 🔎✅ Funcionalidades
+O sistema  oferece uma série de funcionalidades que visam melhorar a gestão e o registro de boletins de ocorrência (BOs), atendendo tanto cidadãos quanto policiais. As principais funcionalidades do sistema incluem:
 
-- Gerenciamento de Usuários: Criação, edição e exclusão de usuários. Atribuição de diferentes níveis de acesso (administrador, atendente, etc.). Definição de permissões para cada nível de acesso.
-
-- Gerenciamento de Dados: Consulta, exportação e impressão de dados. Geração de relatórios estatísticos. Limpeza e arquivamento de dados antigos.
-
-- Configuração do Sistema: Personalização da interface do usuário. Definição de parâmetros de funcionamento do sistema. Integração com outros sistemas (como o sistema prisional).
-#
-
-### 🔎🔒 Requisitos Não Funcionais:
-
-- Desempenho: O sistema deve ser rápido e responsivo, mesmo com um grande volume de dados. O tempo de resposta para consultas e cadastros deve ser mínimo. O sistema deve ser capaz de lidar com um grande número de usuários simultâneos.
-
-- Usabilidade: O sistema deve ser fácil de usar e intuitivo, mesmo para usuários sem conhecimento técnico. A interface do usuário deve ser amigável e acessível. A documentação do sistema deve ser clara e concisa.
-
-- Segurança: O sistema deve ser seguro contra acessos não autorizados, ataques cibernéticos e perda de dados. Os dados dos usuários devem ser confidenciais e protegidos. O sistema deve ter mecanismos de backup e recuperação de dados.
-
-- Disponibilidade: O sistema deve estar disponível 24 horas por dia, 7 dias por semana. O tempo de indisponibilidade deve ser mínimo. O sistema deve ter mecanismos de tolerância a falhas.
-
-- Escalabilidade: O sistema deve ser escalável para acomodar o crescimento da demanda. Deve ser possível adicionar novos usuários, módulos e funcionalidades sem afetar o desempenho do sistema.
-
-- Manutenabilidade: O sistema deve ser fácil de manter e atualizar. O código do sistema deve ser bem documentado e organizado. O sistema deve ter mecanismos de monitoramento e diagnóstico de falhas.
+- Registro de Boletins de Ocorrência (BOs): O sistema permite que tanto cidadãos quanto policiais registrem boletins de ocorrência de forma rápida e eficiente. O processo é simplificado, com campos de fácil preenchimento e uma interface intuitiva.
+- Validação de BOs pelo Policial: Após o registro do boletim, o policial tem a capacidade de validar e revisar os registros, garantindo que todas as informações estejam corretas e completas antes de serem arquivadas.
+- Acesso aos Boletins de Ocorrência pelo Cidadão: Os cidadãos podem acessar e consultar seus próprios boletins de ocorrência a qualquer momento, facilitando o acompanhamento do status do registro.
+- Pesquisa de BOs pelo Policial: O policial tem acesso a uma funcionalidade de pesquisa avançada, que permite buscar qualquer boletim registrado.
 #
 
 ### 📦 Estrutura de Pastas
