@@ -15,8 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+/**
+ * Serviço responsável pela gestão dos usuários (cidadãos e policiais).
+ */
 @Service
-@Transactional // Rollback - se algo der errado tudo e desfeito
+@Transactional // Rollback - se algo der errado, tudo é desfeito
 @RequiredArgsConstructor
 public class UsuarioService {
 
@@ -31,6 +34,14 @@ public class UsuarioService {
 
     private final BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * Cadastra um novo usuário civil no sistema.
+     *
+     * @param usuario o objeto que contém os dados do usuário.
+     * @param acessoCidadao as informações de acesso para o cidadão.
+     * @return o usuário cadastrado.
+     * @throws IllegalArgumentException se o CPF já estiver cadastrado ou se os dados obrigatórios estiverem ausentes.
+     */
     public Usuario cadastrarUsuario(Usuario usuario, AcessoCidadao acessoCidadao) {
         // Verifica se o CPF já está cadastrado
         if (acessoCidadaoRepository.existsByCpfUsuario(acessoCidadao.getCpfUsuario())) {
@@ -56,6 +67,14 @@ public class UsuarioService {
         return novoUsuario;
     }
 
+    /**
+     * Cadastra um novo usuário policial no sistema.
+     *
+     * @param usuario o objeto que contém os dados do usuário.
+     * @param acessoPolicial as informações de acesso para o policial.
+     * @return o usuário cadastrado.
+     * @throws IllegalArgumentException se a matrícula já estiver cadastrada ou se os dados obrigatórios estiverem ausentes.
+     */
     public Usuario cadastrarUsuarioPolicial(Usuario usuario, AcessoPolicial acessoPolicial) {
         // Verifica se a matrícula já está cadastrada
         if (acessoPolicialRepository.existsByMatricula(acessoPolicial.getMatricula())) {
@@ -80,7 +99,14 @@ public class UsuarioService {
         return novoUsuario;
     }
 
-    // Método para login de usuário
+    /**
+     * Realiza o login de um usuário.
+     *
+     * @param cpf o CPF do usuário.
+     * @param senha a senha fornecida pelo usuário.
+     * @return o usuário autenticado.
+     * @throws IllegalArgumentException se o usuário não for encontrado ou se a senha estiver incorreta.
+     */
     public Usuario entrarUsuario(String cpf, String senha) {
         Usuario usuario = usuarioRepository.findByCPF(cpf)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado."));
@@ -90,6 +116,13 @@ public class UsuarioService {
         return usuario;
     }
 
+    /**
+     * Busca um usuário pelo CPF.
+     *
+     * @param cpf o CPF do usuário.
+     * @return o usuário encontrado.
+     * @throws IllegalArgumentException se o usuário não for encontrado com o CPF informado.
+     */
     public Usuario buscarUsuarioPorCpf(String cpf) {
         return usuarioRepository.findByCPF(cpf)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com o CPF informado."));
