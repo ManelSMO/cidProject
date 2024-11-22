@@ -35,7 +35,6 @@ CREATE INDEX idx_ocorrencia_status ON ocorrencia (staoco);
 CREATE INDEX idx_ocorrencia_valida ON ocorrencia(validaoco);
 
 -- Índices para a tabela `pessoa`
-CREATE INDEX idx_pessoa_usuario ON pessoa (usuarioidusu);
 CREATE INDEX idx_pessoa_email ON pessoa (emailpes);
 CREATE INDEX idx_pessoa_telefone ON pessoa (numtelpes);
 
