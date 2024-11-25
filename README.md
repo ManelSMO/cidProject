@@ -54,6 +54,7 @@ O sistema  oferece uma série de funcionalidades que visam melhorar a gestão e 
     - 📁 Artigo
         - 📃 Artigo Banco I 2024/1 - antigo
         - 📃 Artigo Final
+    - 📁 JavaDOC
 - 📃 README (Este arquivo que você está observando neste momento)
 #
 

@@ -1,0 +1,7 @@
+br.edu.unoesc.CID
+br.edu.unoesc.CID.configuration
+br.edu.unoesc.CID.controller
+br.edu.unoesc.CID.entity
+br.edu.unoesc.CID.repository
+br.edu.unoesc.CID.service
+conexaoJDBC
